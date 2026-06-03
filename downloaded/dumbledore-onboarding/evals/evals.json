@@ -1,0 +1,23 @@
+{
+  "skill_name": "dumbledore-onboarding",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我安装 Dumbledore，并创建我自己的 GitHub 知识库仓库，不要把资料写到你的仓库。",
+      "expected_output": "说明会创建用户自己的本地和 GitHub 仓库，优先使用 install.sh 一行命令，并强调不写入上游仓库。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我想在 Claude Code 里用一句话装上邓布利多。",
+      "expected_output": "给出 Agent 一句话安装提示和 curl 一行命令，并说明后续用 dumbledore 处理材料。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "我没有 gh，但想先在本地试用 Dumbledore。",
+      "expected_output": "允许只创建本地仓库，解释缺少 gh 时的手动推送路径。",
+      "files": []
+    }
+  ]
+}

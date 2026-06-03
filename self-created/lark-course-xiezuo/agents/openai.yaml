@@ -1,0 +1,4 @@
+interface:
+  display_name: "lark Course 协作"
+  short_description: "飞书课程协作改稿、坏味道评论与CEO审查入队闭环流程"
+  default_prompt: "Use $lark-course-xiezuo to turn this Feishu course draft into a commented collaborative revision."

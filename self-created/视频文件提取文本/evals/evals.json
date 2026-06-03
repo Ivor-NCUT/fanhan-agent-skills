@@ -1,0 +1,29 @@
+{
+  "skill_name": "视频文件提取文本",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我发了一个 ~/Downloads/interview.mov，帮我把视频里的话提取成文字。",
+      "expected_output": "应使用本 skill，先抽 audio.mp3 和 audio_16k.wav，再用 FunAudioLLM/Fun-ASR-Nano-2512 本地转写，最后直接返回 transcript 正文和文件路径。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "这个 mp4 帮我转一下文字稿，不用总结也不用润色。",
+      "expected_output": "应识别这是视频转文字任务，只输出转写正文，不额外总结、剪辑或改写。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "把这个视频先转成 mp3，再用本地 Fun-ASR-Nano 跑一下，给我纯文本。",
+      "expected_output": "应明确生成 audio.mp3，并使用本地 Fun-ASR-Nano 转写，输出纯文本结果。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "这个视频是越南语和中文混着讲的，帮我转文字，尽量用本地模型。",
+      "expected_output": "应使用本 skill，并选择 MLT 多语种配置 FunAudioLLM/Fun-ASR-MLT-Nano-2512，而不是默认 base。",
+      "files": []
+    }
+  ]
+}

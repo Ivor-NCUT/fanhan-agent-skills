@@ -1,0 +1,24 @@
+{
+  "skill_name": "interview-led-writing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想写一篇关于为什么普通人做 AI 产品不能一上来就追求宏大叙事的文章，先访谈我。",
+      "expected_output": "Agent should trigger the skill and ask only the required first question: 你为什么想写这个选题？",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "可以开始写了。刚才我已经讲了我从咨询客户那里看到的几个故事，先别直接写正文，帮我整理故事线和逻辑线。",
+      "expected_output": "Agent should output story line and logic line for confirmation instead of drafting the final article immediately.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "我确认这个故事线了，就按这个方向写一篇长文，语气像我自己，不要写成 AI 报告。",
+      "expected_output": "Agent should draft a long-form article using the confirmed structure, concrete details, natural voice, and avoid generic AI transitions.",
+      "files": []
+    }
+  ]
+}
+

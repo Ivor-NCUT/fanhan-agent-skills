@@ -1,0 +1,35 @@
+{
+  "skill_name": "dumbledore",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "这是一篇关于 AI Agent 如何管理个人知识库的文章。请用 dumbledore 读取后帮我录入知识库，并判断能不能做成新的 Agent Skill。",
+      "expected_output": "先输出更新提案，不直接写入文件；提案中包含入库判断、知识原子、方法论、痛点、skill 建议、预计修改文件和等待确认。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我发你一段会议记录，里面有几个客户痛点和一个运营 SOP。用邓布利多帮我整理到仓库。",
+      "expected_output": "识别会议记录的隐私级别，提出 sources、atoms、problems、methods 和 skill-ideas 的写入方案，并要求用户确认后再执行。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "这篇文章只是一个新闻快讯，内容很短，你看看有没有必要入库。",
+      "expected_output": "允许判断不建议入库或部分入库，并解释长期价值、可信度和是否需要 skill/script 的判断。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "这篇文章总结了一套客户访谈 SOP。请用 dumbledore 处理，并特别判断能不能做成 OpenClaw skill。",
+      "expected_output": "除常规入库提案外，必须输出 OpenClaw 适配：Workflow/Role/Data-driven/Hybrid 类型、目录结构、frontmatter 草案、references/data/scripts 需求、示例调用、验证方式和公开版审计。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "确认写入。请把你分析出来的知识、SOP、脚本建议和 skill 建议更新到我的仓库。",
+      "expected_output": "确认后先检查 origin 是否为用户绑定仓库且不是 Ivor-NCUT/dumbledore，上游安全后写入文件，再提交并推送到用户自己的 GitHub 仓库。",
+      "files": []
+    }
+  ]
+}

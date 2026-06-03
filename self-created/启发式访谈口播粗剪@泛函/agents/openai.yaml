@@ -1,0 +1,6 @@
+interface:
+  display_name: "启发式访谈口播粗剪@泛函"
+  short_description: "本地转写并粗剪口播访谈素材"
+  default_prompt: "Use $heuristic-interview-rough-cut-fanhan to transcribe my interview footage, help me choose clips, and render a numbered rough cut."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Go Wild Camping Style"
+  short_description: "Bold green-white youth editorial visuals."
+  default_prompt: "Use $go-wild-camping-style to design a modern visual asset for my topic."
+  brand_color: "#3F7F2E"

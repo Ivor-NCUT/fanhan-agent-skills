@@ -1,0 +1,7 @@
+interface:
+  display_name: "自然流编导@泛函"
+  short_description: "从长内容提炼短视频选题与启发式访谈提纲"
+  default_prompt: "Use $natural-flow-director-fanhan to extract short-video topics and heuristic interview outlines from this long transcript."
+
+policy:
+  allow_implicit_invocation: true

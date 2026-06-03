@@ -1,0 +1,12 @@
+.venv/
+.tmp-*/
+.tmp-*.zip
+__pycache__/
+*.pyc
+audio_chunks/
+*-transcript/
+transcript.txt
+transcript.md
+transcript.json
+audio.mp3
+audio_16k.wav
