@@ -1,0 +1,24 @@
+{
+  "skill_name": "skill-迭代工作流",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "刚才用「方比比视频号标题方法论」改了三轮，这一版我满意了，把我的反馈更新到 skill 里。",
+      "expected_output": "应定位原始 skill，提取已确认反馈，调用达尔文 skill 或说明不可用，并更新原 SKILL.md。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "这版还不行，继续改。",
+      "expected_output": "不应更新 skill，应继续产出迭代内容。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "把刚才满意的公众号风格沉淀进能力包，但别把具体客户案例写进去。",
+      "expected_output": "应沉淀可复用规则，避免写入一次性或敏感素材。",
+      "files": []
+    }
+  ]
+}
+
