@@ -1,10 +1,10 @@
 # 泛函 Agent Skills
 
-这个仓库收集了泛函本机正在使用的一组 Agent skill，共 119 个。
+这个仓库收集了泛函本机正在使用的一组 Agent skill，共 120 个。
 
 我把它们分成两类：
 
-- `self-created/`：泛函自己沉淀出来的定制 skill，共 27 个。
+- `self-created/`：泛函自己沉淀出来的定制 skill，共 28 个。
 - `downloaded/`：下载或安装来的通用 skill，共 92 个，包含 dbs 工具箱。
 
 这些 skill 覆盖内容创作、飞书工作流、会议纪要、视频素材、咨询交付、前端页面、文件处理、GitHub 工作流等场景。适合拿来观察一个科技从业者如何把高频工作拆成可复用的 Agent 能力。
@@ -33,6 +33,7 @@
 | 课程主编@泛函 | 用来做访谈式梳理、咨询交付或课程整理。 | `self-created/course-editor-in-chief-fanhan` |
 | 泛函风格写作 | 用来提炼风格、改写内容或产出发布文案。 | `self-created/fanhan-style-writing` |
 | lark Course 协作 | 用来连接飞书里的具体工作对象。 | `self-created/lark-course-xiezuo` |
+| 飞书跨租户迁移文档@泛函 | 用来把飞书云文档、知识库、云盘文件和多维表格跨租户迁移到目标租户。 | `self-created/飞书跨租户迁移文档@泛函` |
 | 自然流编导@泛函（agents） | 用来处理视频、口播、访谈或逐字稿素材。 | `self-created/natural-flow-director-fanhan` |
 | 线下演讲录音稿精校@泛函 | 用来处理视频、口播、访谈或逐字稿素材。 | `self-created/offline-speech-transcript-editor-fanhan` |
 | 个人 IP 定位咨询@泛函 | 用来做访谈式梳理、咨询交付或课程整理。 | `self-created/personal-ip-positioning-consultant-fanhan` |

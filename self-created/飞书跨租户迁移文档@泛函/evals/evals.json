@@ -1,0 +1,23 @@
+{
+  "skill_name": "feishu-cross-tenant-migration-fanhan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我有三个旧飞书租户，想把里面我能访问到的文档都搬到新租户的一个总文件夹里。我不懂命令行，但可以扫码授权，也能检查几个迁移后的链接。你帮我设计并执行这个迁移流程。",
+      "expected_output": "Agent should guide profile/auth confirmation, create destination folder structure, run a small proof of concept, then batch migrate with lark-cli, producing manifest, summary, and failure list.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "上次你说旧版 doc 走导出 docx 再导入，但现在飞书文档可以导出 markdown 了。请把跨租户迁移方案改成尽量先 markdown，再导入到新租户，避免格式乱。",
+      "expected_output": "Agent should distinguish modern docx from legacy doc, use Markdown export/import for modern docs, keep docx fallback only for legacy docs or failed Markdown exports, and explain why.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "迁移到最后有一个多维表格复制失败，说缺 base:block:read。我已经用源租户扫码授权了，你继续处理，最后告诉我这个 Base 到底迁没迁成功。",
+      "expected_output": "Agent should verify source auth/scopes with lark-cli, inspect Base tables/blocks, retry copy/export where appropriate, create a clearly marked placeholder only after API audit proves no recoverable structure, and record the result in manifest notes.",
+      "files": []
+    }
+  ]
+}
