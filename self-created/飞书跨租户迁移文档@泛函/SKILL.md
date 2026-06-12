@@ -1,6 +1,6 @@
 ---
 name: feishu-cross-tenant-migration-fanhan
-description: Use this skill whenever the user wants to migrate, copy, consolidate, archive, rescue, or rebuild Feishu/Lark cloud documents, Wiki pages, Drive folders, Sheets, Slides, Base/Bitable apps, or ordinary files from one tenant/account into another tenant. This skill is especially important for cross-tenant Feishu moves using lark-cli, Markdown-first document migration, QR/user authorization, migration manifests, and non-technical onboarding. Use it even if the user only says “把这个租户的文档搬到另一个飞书”, “跨租户迁移”, “创建副本”, “文档搬家”, or “飞书资料归档”.
+description: Use this skill whenever the user wants to migrate, copy, consolidate, archive, rescue, or rebuild Feishu/Lark cloud documents, Wiki pages, Drive folders, Sheets, Slides, Base/Bitable apps, or ordinary files from one tenant/account into another tenant. This skill is especially important for cross-tenant Feishu moves using lark-cli, first-time lark-cli installation, multi-account Feishu authorization, Markdown-first document migration, QR/user authorization, migration manifests, and non-technical onboarding. Use it even if the user only says “把这个租户的文档搬到另一个飞书”, “跨租户迁移”, “创建副本”, “文档搬家”, or “飞书资料归档”.
 ---
 
 # 飞书跨租户迁移文档@泛函
@@ -44,6 +44,72 @@ Use this phrasing when helpful:
 
 Before large batches, run a small proof-of-concept migration of 3-10 mixed files. Ask the user to spot-check a few target links before migrating hundreds of items.
 
+## First-Time Setup
+
+Assume the user may not have `lark-cli` installed or authorized. Check this before discussing migration mechanics.
+
+### Check And Install lark-cli
+
+Run:
+
+```bash
+command -v lark-cli
+lark-cli --version
+```
+
+If `lark-cli` is missing, install it with npm:
+
+```bash
+npm install -g @larksuite/cli
+lark-cli --version
+```
+
+If npm or Node.js is missing, stop and explain the smallest next step in plain language. For macOS users, suggest installing Node.js with Homebrew if Homebrew is available:
+
+```bash
+brew install node
+npm install -g @larksuite/cli
+```
+
+If `lark-cli` exists, update it before a migration unless the user asks not to:
+
+```bash
+lark-cli update
+```
+
+Tell the user that this updates both the CLI and bundled Feishu skills.
+
+### Initial App/Profile Setup
+
+List profiles:
+
+```bash
+lark-cli profile list
+```
+
+If there are no usable profiles, initialize configuration:
+
+```bash
+lark-cli config init --new
+```
+
+If the user already has Feishu app credentials for each tenant, create explicit profiles instead of overloading one default profile:
+
+```bash
+lark-cli profile add --name <tenant-slug> --brand feishu --app-id <app-id> --app-secret-stdin
+```
+
+Use human-readable profile names such as:
+
+```text
+source-bibai
+source-feixingjia
+source-personal
+target-aimanziyi
+```
+
+Do not ask a non-technical user to invent profile names. Propose names from their tenant names and confirm.
+
 ## Safety Rules
 
 - Do not rely on “把链接发给目标账号再手动创建副本” as the main method. It is useful for one-off rescue, but too slow and hard to audit for large migrations.
@@ -69,14 +135,51 @@ If auth is missing or scopes are insufficient, use device-code login and guide t
 
 ```bash
 lark-cli auth login --profile <profile> --scope <comma-separated-scopes> --no-wait --json
-lark-cli auth qrcode --device-code <device_code>
+lark-cli auth qrcode <verification_url> --output <relative-path.png>
 lark-cli auth login --profile <profile> --device-code <device_code>
 ```
 
-Explain the QR step plainly:
+Use split-flow: generate a fresh authorization URL/QR code, send it to the user, then stop and wait for the user to say authorization is complete. Only after that run `lark-cli auth login --profile <profile> --device-code <device_code>`. Do not reuse old `device_code` values.
+
+### Multi-Tenant Authorization Script
+
+For each source tenant and the target tenant, repeat this checklist:
+
+1. Tell the user which tenant is being authorized now.
+2. Ask them to switch Feishu Web to the matching account before opening the authorization link:
+
+   ```text
+   现在要授权「<租户名>」。
+   请先在浏览器打开飞书网页版，点右上角头像，确认当前登录/切换到「<租户名>」对应账号。
+   如果网页端还停在别的租户，先退出或切换账号，再打开我发你的授权链接。
+   ```
+
+3. If they scan a QR code with the mobile app, remind them to confirm the mobile app is also on the matching account/tenant.
+4. Generate authorization:
+
+   ```bash
+   lark-cli auth login --profile <profile> --domain drive,docs,wiki,sheets,slides,base --no-wait --json
+   lark-cli auth qrcode <verification_url> --output <relative-path.png>
+   ```
+
+5. Send the authorization link and QR code. Ask the user to reply “已授权” after finishing.
+6. After the user confirms, complete login:
+
+   ```bash
+   lark-cli auth login --profile <profile> --device-code <device_code>
+   lark-cli auth status --profile <profile> --verify
+   ```
+
+Explain each QR step plainly:
 
 ```text
 现在需要用“源租户”的飞书账号扫码。扫码后我才能读取这个租户的文档列表和导出内容。
+```
+
+For the target tenant, change the wording:
+
+```text
+现在需要授权“目标租户”。扫码后我才能在目标租户里创建文件夹、导入文档和上传文件。
 ```
 
 Common scopes depend on content type. Start narrow, then add only when needed:

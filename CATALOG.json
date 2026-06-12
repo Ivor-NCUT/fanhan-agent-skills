@@ -1393,10 +1393,10 @@
     "folder": "飞书跨租户迁移文档@泛函",
     "name": "feishu-cross-tenant-migration-fanhan",
     "title": "飞书跨租户迁移文档@泛函",
-    "description": "Use this skill whenever the user wants to migrate, copy, consolidate, archive, rescue, or rebuild Feishu/Lark cloud documents, Wiki pages, Drive folders, Sheets, Slides, Base/Bitable apps, or ordinary files from one tenant/account into another tenant. This skill is especially important for cross-tenant Feishu moves using lark-cli, Markdown-first document migration, QR/user authorization, migration manifests, and non-technical onboarding.",
+    "description": "Use this skill whenever the user wants to migrate, copy, consolidate, archive, rescue, or rebuild Feishu/Lark cloud documents, Wiki pages, Drive folders, Sheets, Slides, Base/Bitable apps, or ordinary files from one tenant/account into another tenant. This skill is especially important for cross-tenant Feishu moves using lark-cli, first-time lark-cli installation, multi-account Feishu authorization, Markdown-first document migration, QR/user authorization, migration manifests, and non-technical onboarding. Use it even if the user only says “把这个租户的文档搬到另一个飞书”, “跨租户迁移”, “创建副本”, “文档搬家”, or “飞书资料归档”.",
     "category": "self-created",
     "display_title": "飞书跨租户迁移文档@泛函",
-    "one_liner": "用来把飞书云文档、知识库、云盘文件和多维表格跨租户迁移到目标租户。",
+    "one_liner": "用来安装配置 lark-cli，并把飞书云文档、知识库、云盘文件和多维表格跨租户迁移到目标租户。",
     "repo_path": "self-created/飞书跨租户迁移文档@泛函"
   },
   {

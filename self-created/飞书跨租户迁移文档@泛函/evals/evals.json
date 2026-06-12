@@ -18,6 +18,12 @@
       "prompt": "迁移到最后有一个多维表格复制失败，说缺 base:block:read。我已经用源租户扫码授权了，你继续处理，最后告诉我这个 Base 到底迁没迁成功。",
       "expected_output": "Agent should verify source auth/scopes with lark-cli, inspect Base tables/blocks, retry copy/export where appropriate, create a clearly marked placeholder only after API audit proves no recoverable structure, and record the result in manifest notes.",
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "我电脑上好像还没装 lark-cli，也没有授权过我的几个飞书租户。我想把 A、B 两个旧租户迁移到新租户 C，你一步步带我弄，我只会打开飞书网页和扫码。",
+      "expected_output": "Agent should check/install lark-cli, initialize or verify profiles, propose one profile per tenant, guide separate authorization for A, B, and C, explicitly remind the user to switch Feishu Web to the matching tenant/account before each authorization link, verify auth status, then proceed to proof-of-concept migration.",
+      "files": []
     }
   ]
 }

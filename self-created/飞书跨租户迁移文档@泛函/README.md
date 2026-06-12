@@ -4,9 +4,9 @@
 
 ## Files
 
-- `SKILL.md`: 迁移主流程，包含非技术用户 onboarding、授权引导、Markdown 优先策略、各类型文档兜底方案。
+- `SKILL.md`: 迁移主流程，包含 lark-cli 安装、非技术用户 onboarding、多租户授权引导、Markdown 优先策略、各类型文档兜底方案。
 - `scripts/summarize_manifest.py`: 根据迁移事件日志生成最终清单、失败列表和汇总统计。
-- `evals/evals.json`: 基础测试提示词，覆盖全量迁移、Markdown 优先纠偏和 Base 授权卡点。
+- `evals/evals.json`: 基础测试提示词，覆盖全量迁移、首次安装授权、Markdown 优先纠偏和 Base 授权卡点。
 
 ## Usage
 
