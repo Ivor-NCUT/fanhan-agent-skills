@@ -1,10 +1,10 @@
 # 泛函 Agent Skills
 
-这个仓库收集了泛函本机正在使用的一组 Agent skill，共 120 个。
+这个仓库收集了泛函本机正在使用的一组 Agent skill，共 128 个。
 
 我把它们分成两类：
 
-- `self-created/`：泛函自己沉淀出来的定制 skill，共 28 个。
+- `self-created/`：泛函自己沉淀出来的定制 skill，共 36 个。
 - `downloaded/`：下载或安装来的通用 skill，共 92 个，包含 dbs 工具箱。
 
 这些 skill 覆盖内容创作、飞书工作流、会议纪要、视频素材、咨询交付、前端页面、文件处理、GitHub 工作流等场景。适合拿来观察一个科技从业者如何把高频工作拆成可复用的 Agent 能力。
@@ -26,6 +26,10 @@
 
 | Skill | 一句话介绍 | 仓库路径 |
 |---|---|---|
+| skill 开发与迭代规范 | 用软件开发最佳实践管理复杂 Agent skill 的需求澄清、阶段文档和 GitHub 迭代。 | `self-created/skill-开发与迭代规范` |
+| 简历 + 作品集文本解析@泛函 | 把候选人邮件材料、简历、作品集和网页/社媒/视频证据解析成 JSON + Markdown。 | `self-created/简历+作品集文本解析@泛函` |
+| 邮件智能分类入库@泛函 | 把上游读取出的邮件标题、正文和附件信息分类成候选人、招聘公司、猎头伙伴等可入库记录。 | `self-created/邮件智能分类入库@泛函` |
+| 候选人入库@泛函 | 把候选人投递邮件和简历/作品集解析结果写入飞书多维表格候选人表。 | `self-created/候选人入库@泛函` |
 | AI 领域求职咨询顾问@泛函 | 用来做访谈式梳理、咨询交付或课程整理。 | `self-created/ai-career-consultant-fanhan` |
 | Bonjour! 全栈员工 | 用来提炼风格、改写内容或产出发布文案。 | `self-created/bonjour-full-stack-employee` |
 | 咨询记录整理@泛函 | 用来处理视频、口播、访谈或逐字稿素材。 | `self-created/consulting-record-organizer-fanhan` |

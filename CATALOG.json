@@ -1678,5 +1678,61 @@
     "display_title": "启发式访谈口播粗剪@泛函",
     "one_liner": "用来处理视频、口播、访谈或逐字稿素材。",
     "repo_path": "self-created/启发式访谈口播粗剪@泛函"
+  },
+  {
+    "root": "/Users/fanhan/.agents/skills",
+    "root_label": "agents",
+    "rel_dir": "skill-开发与迭代规范",
+    "dir": "/Users/fanhan/.agents/skills/skill-开发与迭代规范",
+    "folder": "skill-开发与迭代规范",
+    "name": "skill 开发与迭代规范",
+    "title": "skill 开发与迭代规范",
+    "description": "用软件开发最佳实践来开发、迭代和管理复杂 Agent skill。Use this skill whenever the user wants to create, evolve, refactor, productize, or govern an Agent skill, especially when the skill is complex, long-lived, GitHub-backed, multi-agent-developed, or needs staged requirements documents, issue/branch/PR discipline, MVP planning, and ongoing repository synchronization.",
+    "category": "self-created",
+    "display_title": "skill 开发与迭代规范",
+    "one_liner": "用软件开发最佳实践管理复杂 Agent skill 的需求澄清、阶段文档和 GitHub 迭代。",
+    "repo_path": "self-created/skill-开发与迭代规范"
+  },
+  {
+    "root": "/Users/fanhan/.agents/skills",
+    "root_label": "agents",
+    "rel_dir": "简历+作品集文本解析@泛函",
+    "dir": "/Users/fanhan/.agents/skills/简历+作品集文本解析@泛函",
+    "folder": "简历+作品集文本解析@泛函",
+    "name": "简历 + 作品集文本解析@泛函",
+    "title": "简历 + 作品集文本解析@泛函",
+    "description": "将上游已经提取出的邮件标题、正文、简历附件和作品集文件/链接解析成可检索的 JSON + Markdown。Use this skill whenever the user asks to parse candidate resumes, portfolios, personal websites, PDF/DOCX/PPT/Markdown/HTML files, Lark docs, webpages, social profiles/posts, videos, podcasts, AI video works, long-form articles, or any candidate evidence for later JD matching and talent search. It extracts text, builds portfolio project cards, tags evidence for aesthetics, internet sense, content quality, and technical ability, and keeps source evidence traceable.",
+    "category": "self-created",
+    "display_title": "简历 + 作品集文本解析@泛函",
+    "one_liner": "把候选人邮件材料、简历、作品集和网页/社媒/视频证据解析成 JSON + Markdown。",
+    "repo_path": "self-created/简历+作品集文本解析@泛函"
+  },
+  {
+    "root": "/Users/fanhan/.agents/skills",
+    "root_label": "agents",
+    "rel_dir": "邮件智能分类入库@泛函",
+    "dir": "/Users/fanhan/.agents/skills/邮件智能分类入库@泛函",
+    "folder": "邮件智能分类入库@泛函",
+    "name": "邮件智能分类入库@泛函",
+    "title": "邮件智能分类入库@泛函",
+    "description": "对上游已经读取出的邮件标题、正文和附件信息进行智能分类，并产出可入库的 JSON + Markdown。Use this skill whenever the user asks to classify recruiting-related emails, triage candidate submissions, identify hiring company demand, recognize headhunter partners, recognize ecosystem partner referrals, or prepare email-derived records for later candidate/company/partner database ingestion. It does not read mailboxes; it classifies already-provided email content and records evidence, confidence, recommended routing, and follow-up actions.",
+    "category": "self-created",
+    "display_title": "邮件智能分类入库@泛函",
+    "one_liner": "把上游读取出的邮件标题、正文和附件信息分类成候选人、招聘公司、猎头伙伴等可入库记录。",
+    "repo_path": "self-created/邮件智能分类入库@泛函"
+  },
+  {
+    "root": "/Users/fanhan/.agents/skills",
+    "root_label": "agents",
+    "rel_dir": "候选人入库@泛函",
+    "dir": "/Users/fanhan/.agents/skills/候选人入库@泛函",
+    "folder": "候选人入库@泛函",
+    "name": "候选人入库@泛函",
+    "title": "候选人入库@泛函",
+    "description": "将候选人投递邮件、简历解析结果和作品集解析结果写入指定飞书多维表格的「候选人」数据表。Use this skill whenever the workflow has classified an email as candidate_submission, needs to ingest a candidate into Lark/Feishu Base, write parsed resume/portfolio information to the candidate database, upload resume or portfolio attachments to Base attachment fields, deduplicate by email/source mail ID, or update an existing candidate record.",
+    "category": "self-created",
+    "display_title": "候选人入库@泛函",
+    "one_liner": "把候选人投递邮件和简历/作品集解析结果写入飞书多维表格候选人表。",
+    "repo_path": "self-created/候选人入库@泛函"
   }
 ]
