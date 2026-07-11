@@ -103,6 +103,16 @@ Apply these caps after scoring:
 
 ## Tooling
 
+### Database selection
+
+When the task uses the local `opportunity_matcher` SQLite database, resolve the database before reading candidates or jobs:
+
+1. If `OPPORTUNITY_MATCHER_DB_FILE` is set, use that exact path.
+2. Otherwise use the current CLI project's `data/opportunity_matcher.db`.
+3. Report the selected path once in the result.
+
+Do not silently fall back to a different empty database when the configured database exists. Before matching, verify candidate count, total/open job count, and match-result count. If the selected database has no open jobs, report the data gap instead of fabricating matches.
+
 Use bundled script for deterministic batch checks:
 
 ```bash
