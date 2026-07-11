@@ -1,0 +1,23 @@
+{
+  "skill_name": "approved-draft-delivery",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我已经在工作台批准草稿 #42，收件人 candidate@example.com，主题《新机会》。请发送并回查投递状态。",
+      "expected_output": "Re-reads outbox 42, verifies approved recipient/subject, uses lark-mail to send and send_status, then records message ID and delivery state with one attempt.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "把 outbox #13 发出去。",
+      "expected_output": "Refuses to send if the database status is not approved and reports the current status without inventing confirmation.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "草稿 #42 上次投递失败了，我确认重试一次。",
+      "expected_output": "Re-reads the failed approved record, retries exact fields, increments attempt count once, checks delivery, and records the new result.",
+      "files": []
+    }
+  ]
+}
