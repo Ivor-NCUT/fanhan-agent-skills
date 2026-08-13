@@ -20,7 +20,7 @@ python scripts/score_candidates.py --input candidates.json --output scores.json 
 The input may be one candidate object, an array, or `{ "candidates": [...] }`. For the production cloud database, read `recruiting-database-crud`, verify `/healthz`, list active candidates, then fetch each shortlisted candidate detail through its business API. Never query SQLite or Connector endpoints.
 
 4. Sort by `score` descending, then `candidate_id` ascending. The same normalized evidence and algorithm version must return the same score and order.
-5. Report the selected benchmark score, all benchmark projections, seven evidence dimensions, evidence coverage, and material gaps. Read [references/rubric.md](references/rubric.md) and [references/role-benchmarks.md](references/role-benchmarks.md) when explaining or changing the rubric.
+5. Report the selected benchmark score, all benchmark projections, seven evidence dimensions, evidence coverage, and material gaps. Role choices are Engineering/FDE, Product, Growth/Operations, Design, Creative, Commercial, and People/Recruiting. Read [references/rubric.md](references/rubric.md) and [references/role-benchmarks.md](references/role-benchmarks.md) when explaining or changing the rubric.
 
 ## Boundaries
 
