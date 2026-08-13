@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-VERSION = "ai-native-evidence-v2.0.0"
+VERSION = "ai-native-evidence-v2.1.0"
 
 RUBRIC = {
     "ai_native_practice": (20, [
@@ -51,17 +51,19 @@ BENCHMARK_WEIGHTS = {
     "engineering": {"ai_native_practice": 25, "shipped_proof": 15, "end_to_end_ownership": 20, "learning_first_principles": 10, "school_prestige": 15, "customer_business": 5, "communication_collaboration": 10},
     "product": {"ai_native_practice": 20, "shipped_proof": 20, "end_to_end_ownership": 15, "learning_first_principles": 5, "school_prestige": 15, "customer_business": 15, "communication_collaboration": 10},
     "growth_operations": {"ai_native_practice": 15, "shipped_proof": 20, "end_to_end_ownership": 15, "learning_first_principles": 5, "school_prestige": 15, "customer_business": 20, "communication_collaboration": 10},
-    "design_creative": {"ai_native_practice": 20, "shipped_proof": 25, "end_to_end_ownership": 10, "learning_first_principles": 5, "school_prestige": 10, "customer_business": 15, "communication_collaboration": 15},
-    "commercial_fde": {"ai_native_practice": 15, "shipped_proof": 15, "end_to_end_ownership": 20, "learning_first_principles": 5, "school_prestige": 15, "customer_business": 20, "communication_collaboration": 10},
+    "design": {"ai_native_practice": 15, "shipped_proof": 25, "end_to_end_ownership": 10, "learning_first_principles": 5, "school_prestige": 15, "customer_business": 15, "communication_collaboration": 15},
+    "creative": {"ai_native_practice": 20, "shipped_proof": 25, "end_to_end_ownership": 10, "learning_first_principles": 10, "school_prestige": 10, "customer_business": 10, "communication_collaboration": 15},
+    "commercial": {"ai_native_practice": 15, "shipped_proof": 15, "end_to_end_ownership": 15, "learning_first_principles": 5, "school_prestige": 15, "customer_business": 25, "communication_collaboration": 10},
     "people_recruiting": {"ai_native_practice": 15, "shipped_proof": 10, "end_to_end_ownership": 15, "learning_first_principles": 10, "school_prestige": 15, "customer_business": 15, "communication_collaboration": 20},
 }
 
 ROLE_SIGNALS = {
-    "engineering": [(5, r"(?:软件工程|工程师|developer|backend|frontend|full.?stack|后端|前端|全栈)"), (5, r"(?:代码|编程|Python|Java|JavaScript|TypeScript|Go|C\+\+|React|Node\.js)"), (5, r"(?:架构|系统设计|性能优化|debug|排障|测试|CI/CD|code review|PR Review)"), (5, r"(?:Agent SDK|tool calling|RAG|MCP|模型训练|SFT|评测|benchmark)")],
+    "engineering": [(5, r"(?:软件工程|工程师|developer|backend|frontend|full.?stack|后端|前端|全栈|FDE|field deployment engineer)"), (5, r"(?:代码|编程|Python|Java|JavaScript|TypeScript|Go|C\+\+|React|Node\.js)"), (5, r"(?:架构|系统设计|性能优化|debug|排障|测试|CI/CD|code review|PR Review)"), (5, r"(?:Agent SDK|tool calling|RAG|MCP|模型训练|SFT|评测|benchmark|解决方案落地|客户现场|实施交付)")],
     "product": [(5, r"(?:产品经理|产品负责人|product manager|PM)"), (5, r"(?:用户访谈|需求分析|需求拆解|PRD|原型|Figma)"), (5, r"(?:产品规划|路线图|roadmap|产品设计|功能设计)"), (5, r"(?:埋点|指标体系|A/B|用户反馈|产品迭代)")],
     "growth_operations": [(5, r"(?:增长|growth|运营|operations|GTM)"), (5, r"(?:投放|获客|转化|留存|DAU|GMV|ROI|漏斗|A/B)"), (5, r"(?:小红书|抖音|TikTok|YouTube|社媒|内容运营|KOL|KOC)"), (5, r"(?:活动策划|用户运营|社区运营|商业化|电商)")],
-    "design_creative": [(5, r"(?:UI|UX|交互设计|视觉设计|设计师|creative technologist)"), (5, r"(?:Figma|Sketch|Adobe|Photoshop|Illustrator|After Effects|Blender|Unity)"), (5, r"(?:作品集|portfolio|原型|动效|动画|视频|3D|视觉)"), (5, r"(?:设计系统|用户体验|信息架构|品牌设计|创意技术)")],
-    "commercial_fde": [(5, r"(?:FDE|解决方案|售前|客户成功|实施|交付)"), (5, r"(?:销售|商务|BD|商业化|成交|合同|回款)"), (5, r"(?:客户需求|业务诊断|PoC|方案设计|定价|投标)"), (5, r"(?:客户沟通|跨团队推进|项目管理|业务落地)")],
+    "design": [(5, r"(?:UI|UX|交互设计|视觉设计|产品设计|设计师)"), (5, r"(?:Figma|Sketch|Adobe|Photoshop|Illustrator)"), (5, r"(?:作品集|portfolio|原型|动效|设计系统)"), (5, r"(?:用户体验|信息架构|品牌设计|可用性|设计规范)")],
+    "creative": [(5, r"(?:创意|creative|内容创作|艺术|导演|编剧)"), (5, r"(?:After Effects|Blender|Unity|视频|动画|3D|影像)"), (5, r"(?:作品集|portfolio|短片|展览|广告创意)"), (5, r"(?:AIGC|AI 视频|生成艺术|创意技术|叙事)")],
+    "commercial": [(5, r"(?:销售|商务|BD|商业化|成交|合同|回款)"), (5, r"(?:客户需求|业务诊断|PoC|方案设计|定价|投标)"), (5, r"(?:售前|客户成功|解决方案|渠道|GTM)"), (5, r"(?:客户沟通|跨团队推进|项目管理|业务落地)")],
     "people_recruiting": [(5, r"(?:招聘|猎头|HRBP|人力资源|人才发展)"), (5, r"(?:寻访|sourcing|面试|候选人|人才盘点)"), (5, r"(?:组织发展|绩效|薪酬|员工关系|培训)"), (5, r"(?:业务伙伴|用人部门|招聘漏斗|人才策略)")],
 }
 
@@ -201,6 +203,9 @@ def self_test():
     assert all(item["score"] > 0 for item in first[0]["dimensions"].values())
     assert score_candidate(strong)["score"] == score_candidate(strong)["score"]
     assert score_candidate(strong, "engineering")["benchmark"] == "engineering"
+    fde = score_candidate({"id": "c", "resume_text": "FDE 工程师，负责客户现场 Python 实施交付和解决方案落地。"}, "engineering")
+    assert fde["role_fit_scores"]["engineering"] >= 15
+    assert {"design", "creative", "commercial", "growth_operations"} <= set(BENCHMARK_WEIGHTS)
     print("self-test ok")
 
 
