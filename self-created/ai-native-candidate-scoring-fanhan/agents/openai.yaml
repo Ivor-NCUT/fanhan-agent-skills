@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Native 候选人评分@泛函"
+  short_description: "基于客户真实招聘反馈，为 AI Native 候选人确定性评分与排序"
+  default_prompt: "Use $ai-native-candidate-scoring-fanhan to score this candidate resume and explain the evidence."
