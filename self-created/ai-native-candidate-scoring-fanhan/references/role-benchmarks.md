@@ -1,17 +1,8 @@
-# Role benchmarks v2.1
+# Role benchmarks v3
 
-Every benchmark is deterministic. Unified uses the seven evidence dimensions directly. Each role benchmark combines an 80-point weighted evidence score with a 20-point role-fit evidence score, so different roles do not merely reshuffle identical saturated scores.
+Every benchmark is deterministic. Unified uses the ten evidence dimensions directly. Each role benchmark combines an 80-point weighted evidence score with a 20-point role-fit evidence score. All roles retain the Five Good signals, then change the emphasis of AI-native, shipped, ownership and customer evidence.
 
-| Benchmark | Education | AI-native | Shipped | Ownership | Learning | Customer/business | Communication |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| Unified | 20 | 20 | 20 | 15 | 10 | 10 | 5 |
-| Engineering / FDE | 15 | 25 | 15 | 20 | 10 | 5 | 10 |
-| Product | 15 | 20 | 20 | 15 | 5 | 15 | 10 |
-| Growth / operations | 15 | 15 | 20 | 15 | 5 | 20 | 10 |
-| Design | 15 | 15 | 25 | 10 | 5 | 15 | 15 |
-| Creative | 10 | 20 | 25 | 10 | 10 | 10 | 15 |
-| Commercial | 15 | 15 | 15 | 15 | 5 | 25 | 10 |
-| People / recruiting | 15 | 15 | 10 | 15 | 10 | 15 | 20 |
+Unified weights are: company 10, school 15, core business 10, performance 10, stability 10, AI-native 12, shipped 10, ownership 8, learning 5 and customer/business 10. Role weights live in the scorer as versioned executable policy and always sum to 100 before the 80/20 role-fit mix.
 
 The role-fit component looks for direct role evidence. FDE belongs to engineering and adds customer-site implementation and solution delivery evidence. Design focuses on user experience, interaction, visual systems and craft; creative focuses on original concepts, narrative, content, art and AI-generated media. Growth / operations remains one benchmark. Commercial covers sales, BD, customer success and commercialization without FDE. Exact JD must-haves remain a separate matching gate.
 

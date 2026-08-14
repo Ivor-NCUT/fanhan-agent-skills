@@ -10,7 +10,7 @@ Produce a job-agnostic evidence score. Do not treat it as an employment decision
 ## Run
 
 1. Normalize only job-relevant evidence: all resume versions, projects, portfolio links, GitHub, skills, career facts, and work samples.
-2. Exclude name, photo, age, gender, ethnicity, nationality, marital/family status, health, disability, religion, political views, and contact details. Do not infer missing traits. Explicit education evidence contributes up to 20 points in the unified benchmark.
+2. Exclude name, photo, age, gender, ethnicity, nationality, marital/family status, health, disability, religion, political views, and contact details. Do not infer missing traits. Explicit education evidence contributes up to 15 points in the unified benchmark.
 3. Run:
 
 ```bash
@@ -20,11 +20,14 @@ python scripts/score_candidates.py --input candidates.json --output scores.json 
 The input may be one candidate object, an array, or `{ "candidates": [...] }`. For the production cloud database, read `recruiting-database-crud`, verify `/healthz`, list active candidates, then fetch each shortlisted candidate detail through its business API. Never query SQLite or Connector endpoints.
 
 4. Sort by `score` descending, then `candidate_id` ascending. The same normalized evidence and algorithm version must return the same score and order.
-5. Report the selected benchmark score, all benchmark projections, seven evidence dimensions, evidence coverage, and material gaps. Role choices are Engineering/FDE, Product, Growth/Operations, Design, Creative, Commercial, and People/Recruiting. Read [references/rubric.md](references/rubric.md) and [references/role-benchmarks.md](references/role-benchmarks.md) when explaining or changing the rubric.
+5. Report the selected benchmark score, all benchmark projections, the Five Good subtotal, talent-value tier, ten evidence dimensions, evidence coverage, and material gaps. Role choices are Engineering/FDE, Product, Growth/Operations, Design, Creative, Commercial, and People/Recruiting. Read [references/rubric.md](references/rubric.md) and [references/role-benchmarks.md](references/role-benchmarks.md) when explaining or changing the rubric.
 
 ## Boundaries
 
 - School prestige is a high-weight ranking signal in the unified benchmark, but not a universal veto. Apply a client/JD-specific education hard gate only when the source requirement explicitly says so.
+- Treat traditional top companies and category-leading young AI companies symmetrically when there is core-business or key-role evidence. Do not award company points from an unknown logo alone.
+- Treat the 5-year/3-move stability rule as positive evidence only when chronology is explicit. Missing dates are unknown, not a negative score.
+- Talent-value and fee-multiple output prioritize headhunting effort; they never automate interview, rejection, recommendation, compensation or hiring.
 - No points for keyword repetition; each rubric signal scores once.
 - Missing evidence receives no points and lowers coverage; never fabricate evidence.
 - Keep JD fit separate. A high base score can still be wrong for a particular role.
