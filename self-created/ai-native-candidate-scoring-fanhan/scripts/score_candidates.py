@@ -5,7 +5,7 @@ import json
 import re
 from pathlib import Path
 
-VERSION = "ai-native-five-good-v3.0.0"
+VERSION = "ai-native-five-good-v3.0.1"
 
 RUBRIC = {
     "company_quality": (10, []),
@@ -159,8 +159,9 @@ def stability_score(text):
     return (10 if years >= 3 else 7 if years >= 2 else 4), [evidence(text, tenure)]
 
 
-def talent_value(score, five_good_score, text):
-    if re.search(r"(?:实习生|实习岗位|internship|\bintern\b)", text, re.I):
+def talent_value(score, five_good_score, candidate):
+    current_type = " ".join(str(candidate.get(key) or "") for key in ("work_type", "direction", "level"))
+    if re.search(r"(?:实习生|实习岗位|internship|\bintern\b|实习)", current_type, re.I) and not re.search(r"(?:正职|全职|full[- ]?time)", current_type, re.I):
         return {"tier": "intern", "headhunting_priority": "low", "fee_multiple": "项目制或低客单"}
     if score >= 75 and five_good_score >= 35:
         return {"tier": "high_value", "headhunting_priority": "high", "fee_multiple": "2-3个月工资"}
@@ -215,7 +216,7 @@ def score_candidate(candidate, benchmark="unified"):
     covered = sum(bool(item["evidence"]) for item in dimensions.values())
     five_good_dimensions = ["company_quality", "school_prestige", "core_business", "high_performance", "stability"]
     five_good_score = sum(dimensions[name]["score"] for name in five_good_dimensions)
-    value = talent_value(benchmark_scores["unified"], five_good_score, text)
+    value = talent_value(benchmark_scores["unified"], five_good_score, candidate)
     return {
         "candidate_id": str(candidate.get("id") or candidate.get("candidate_id") or ""),
         "candidate_name": display_name(candidate),
@@ -270,6 +271,8 @@ def self_test():
     ai_leader = score_candidate({"id": "d", "resume_text": "LiblibAI 技术leader，负责 AI 应用核心业务，在职3年，连续高绩效。"})
     assert ai_leader["dimensions"]["company_quality"]["score"] == 10
     assert ai_leader["five_good"]["score"] >= 30
+    experienced = score_candidate({"id": "e", "work_type": "正职", "resume_text": "早期曾在 AI 公司实习，后负责正式岗位。"})
+    assert experienced["talent_value"]["tier"] != "intern"
     assert all(sum(weights.values()) == 100 for weights in BENCHMARK_WEIGHTS.values())
     print("self-test ok")
 
