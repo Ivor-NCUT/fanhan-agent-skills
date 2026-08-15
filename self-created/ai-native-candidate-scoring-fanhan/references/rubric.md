@@ -1,4 +1,4 @@
-# Rubric v3
+# Rubric v3.1
 
 Source: the private Feishu Base `AI 招聘客户会议妙记库`, table `招聘会议妙记`, scanned 2026-01-01 through 2026-08-13. The first calibration set contained 98 recruiting-related meetings, including 11 explicit client-demand meetings and 89 records with extracted requirement or evaluation quotes.
 
@@ -20,6 +20,8 @@ The v3 calibration adds the headhunter industry's traditional “Five Good” mo
 | Customer and business | 10 | User research, delivery, FDE, growth, revenue, conversion, customer outcomes |
 
 The score is the sum of capped signal points, not an LLM rating. Repeated occurrences of one signal do not add points. `evidence_coverage` is the fraction of dimensions with at least one matched signal and is reported separately from the score.
+
+The v3.1 evidence gate excludes system-inferred direction and skill labels from scoring. Email bodies and resume text are source evidence. A company brand needs employment context, internships receive partial company credit, calendar years do not count as tenure, basic AI tool usage is not equivalent to building an AI-native workflow, and a GitHub tool name is not a shipped GitHub project.
 
 The five-good subtotal is 55. It is reported separately from the final 100-point score. The result also assigns a commercial-priority tier: internship, standard, core or high-value. Fee-multiple text is a business planning reference, not a salary recommendation or automatic employment decision.
 
