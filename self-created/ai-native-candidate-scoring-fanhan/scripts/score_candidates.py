@@ -5,38 +5,39 @@ import json
 import re
 from pathlib import Path
 
-VERSION = "ai-native-five-good-v3.0.1"
+VERSION = "ai-native-five-good-v3.1.0"
 
 RUBRIC = {
     "company_quality": (10, []),
     "school_prestige": (15, []),
     "core_business": (10, [
-        (6, r"(?:核心业务|核心产品|核心团队|核心部门|主航道|战略业务|抖音|douyin|基础模型|大模型平台|AI应用)"),
+        (6, r"(?:核心业务|核心产品|核心团队|核心部门|主航道|战略业务|基础模型|大模型平台|AI应用)"),
         (4, r"(?:技术负责人|技术leader|tech lead|CTO|首席技术官|业务负责人|产品负责人).{0,40}(?:AI|大模型|智能体|生成式|AIGC)"),
     ]),
     "high_performance": (10, [
         (6, r"(?:M\+|E\+|S级|A\+|高绩效|绩效.{0,8}(?:优秀|卓越|top)|top\s*\d+%|前\s*\d+%)"),
         (4, r"(?:晋升|破格晋升|优秀员工|最佳员工|年度.{0,8}(?:奖|优秀)|连续.{0,8}(?:优秀|高绩效))"),
         (4, r"(?:营收|收入|GMV|用户|活跃|留存|转化|成本).{0,24}\d+(?:\.\d+)?\s*(?:%|万|亿|k|w|人|家|元|美元)"),
+        (6, r"(?:TOP\s*\d+|热搜|冲榜|十万|百万|千万|亿级).{0,24}(?:阅读|播放|曝光|榜|话题)"),
     ]),
     "stability": (10, []),
     "ai_native_practice": (12, [
-        (7, r"(?:ai|llm|agentic|agent|大模型|智能体)"),
-        (6, r"(?:claude|cursor|codex|copilot|chatgpt|gemini)"),
-        (6, r"(?:rag|mcp|prompt|向量|embedding|微调|fine[- ]?tun|多模态|评测|eval)"),
-        (6, r"(?:自动化|automation|workflow|工作流|数字员工)"),
+        (3, r"(?:claude|cursor|codex|copilot|chatgpt|gemini|deepseek|suno|即梦|seedance)"),
+        (6, r"(?:(?:搭建|构建|实现|部署|改造|主导(?:开发|设计)|独立(?:开发|设计)|开发了|设计了).{0,60}(?:ai|llm|agent|大模型|智能体|自动化|workflow|工作流)|(?:ai|llm|agent|大模型|智能体).{0,20}(?:工作流|内容工厂|系统|平台).{0,12}(?:搭建|构建|实现|部署|改造|主导))"),
+        (4, r"(?:(?:搭建|开发|构建|设计|实现|部署|评测).{0,40}(?:rag|mcp|prompt|向量|embedding|微调|fine[- ]?tun|多模态|eval)|(?:rag|mcp|prompt|向量|embedding|微调|fine[- ]?tun|多模态|eval).{0,40}(?:搭建|开发|构建|设计|实现|部署|评测))"),
     ]),
     "shipped_proof": (10, [
-        (7, r"(?:github|开源|open source|作品集|portfolio|demo|个人网站)"),
-        (7, r"(?:上线|发布|部署|launch|ship|deployed|production|落地)"),
-        (6, r"(?:用户|客户|活跃|留存|转化|收入|营收|增长).{0,24}\d+(?:\.\d+)?\s*(?:%|万|千|k|w|人|家|元|美元)?"),
+        (6, r"(?:github\.com|github\s*[:/]\s*[^\s]+|开源.{0,20}(?:项目|仓库|贡献)|作品集\s*[:：]|portfolio\s*[:：/]|可访问的?\s*demo|个人网站\s*[:：/])"),
+        (6, r"(?:产品|项目|系统|平台|应用|插件|工具|内容|活动).{0,40}(?:上线|发布|部署|launch|ship|deployed|production|落地)"),
+        (6, r"(?:完成|实现|主导).{0,40}(?:商业|客户).{0,20}(?:交付|上线|落地)"),
+        (4, r"(?:用户|客户|活跃|留存|转化|收入|营收|增长|GMV).{0,24}\d+(?:\.\d+)?\s*(?:%|万|千|亿|k|w|人|家|元|美元|小时)"),
         (5, r"(?:产品|项目|系统|平台|应用|插件|工具).{0,32}(?:从0到1|0\s*[-到]\s*1|独立|主导|上线|发布|落地)"),
     ]),
     "end_to_end_ownership": (8, [
         (6, r"(?:端到端|全流程|闭环|end[- ]?to[- ]?end|需求.*上线|从需求.*交付)"),
-        (5, r"(?:独立|主导|负责|owner|牵头|带领)"),
-        (5, r"(?:架构|技术选型|系统设计|排障|debug|故障|性能优化|迭代)"),
-        (4, r"(?:结果负责|业务结果|交付结果|复盘|验证|反馈)"),
+        (4, r"(?:独立|主导|owner|牵头|带领).{0,60}(?:产品|项目|系统|平台|应用|工作流|交付|上线|发布|落地|运营)"),
+        (3, r"(?:架构|技术选型|系统设计|排障|debug|故障|性能优化).{0,40}(?:实现|解决|上线|发布|落地|提升|降低)"),
+        (3, r"(?:结果负责|业务结果|交付结果|复盘|验证|反馈).{0,40}(?:指标|增长|提升|降低|上线|落地)"),
     ]),
     "learning_first_principles": (5, [
         (3, r"(?:第一性|first principles?|底层逻辑|拆解问题)"),
@@ -76,7 +77,7 @@ ROLE_SIGNALS = {
     "people_recruiting": [(5, r"(?:招聘|猎头|HRBP|人力资源|人才发展)"), (5, r"(?:寻访|sourcing|面试|候选人|人才盘点)"), (5, r"(?:组织发展|绩效|薪酬|员工关系|培训)"), (5, r"(?:业务伙伴|用人部门|招聘漏斗|人才策略)")],
 }
 
-TEXT_FIELDS = ("resume_text", "material_text", "profile_text", "portfolio_text", "summary", "direction")
+TEXT_FIELDS = ("resume_text", "material_text", "profile_text", "portfolio_text", "summary")
 DEGREE = r"(?:本科|学士|硕士|博士|Ph\.?D|Bachelor|Master)"
 SCHOOL_TIERS = (
     (15, r"(?:清华大学|北京大学|复旦大学|上海交通大学|浙江大学|中国科学技术大学|南京大学|哈尔滨工业大学|西安交通大学|麻省理工|MIT|Stanford|斯坦福|Harvard|哈佛|Berkeley|伯克利|Cambridge|剑桥|Oxford|牛津|Princeton|普林斯顿|Yale|耶鲁|Caltech|加州理工|Carnegie Mellon|卡内基梅隆|ETH Zurich|苏黎世联邦理工|Imperial College|帝国理工|UCL|伦敦大学学院|National University of Singapore|新加坡国立大学|Nanyang Technological University|南洋理工)"),
@@ -86,11 +87,12 @@ SCHOOL_TIERS = (
 
 def candidate_text(candidate):
     values = [candidate.get(key) for key in TEXT_FIELDS]
-    values += candidate.get("skills") or []
     values += candidate.get("portfolio") or candidate.get("links") or []
     values += candidate.get("career_facts") or []
     for resume in candidate.get("resumes") or []:
         values.append(resume.get("resume_text"))
+    for email in candidate.get("emails") or []:
+        values.append(email.get("body_text") or email.get("body_plain_text"))
     return "\n".join(_string(value) for value in values if value)
 
 
@@ -100,13 +102,21 @@ def _string(value):
 
 def display_name(candidate):
     name = str(candidate.get("name") or "").strip()
-    if name and not re.fullmatch(r"[+\d\s-]{7,}", name):
+    invalid = {"未命名候选人", "教育经历", "工作经历", "项目经历", "职业概述", "个人信息", "个人简历", "简历"}
+    if name and name not in invalid and not re.fullmatch(r"[+\d\s-]{7,}", name):
         return name
     for resume in candidate.get("resumes") or []:
         filename = str(resume.get("file_name") or resume.get("filename") or resume.get("original_filename") or resume.get("name") or "")
         match = re.search(r"(?:^|[_-])([\u4e00-\u9fff]{2,4})(?=(?:的)?(?:AI|产品|个人|求职|运营)?简历|[_\-.\s])", filename)
         if match:
             return match.group(1)
+    for email in candidate.get("emails") or []:
+        subject = str(email.get("subject") or "").strip()
+        match = re.match(r"([\u4e00-\u9fffA-Za-z·.\s]{2,40})(?=\s*[｜|])", subject)
+        if not match:
+            match = re.match(r"([\u4e00-\u9fff]{2,4})(?=(?:产品|运营|市场|技术|个人|求职)?简历)", subject)
+        if match and match.group(1).strip() not in invalid:
+            return match.group(1).strip()
     text = candidate_text(candidate)[:1000]
     match = re.search(r"(?:^|\n)([\u4e00-\u9fff]{2,4})(?=\s+(?:1\d{10}|[\w.+-]+@))", text)
     return match.group(1) if match else "未命名候选人"
@@ -135,13 +145,23 @@ def school_score(text):
 
 def company_score(text):
     for pattern in (TRADITIONAL_TOP_COMPANIES, AI_ERA_COMPANIES):
-        match = re.search(pattern, text, re.I)
+        match = re.search(
+            rf"(?:(?:曾任|任职|就职|加入|工作经历).{{0,80}}{pattern}|"
+            rf"{pattern}.{{0,80}}(?:任职|就职|员工|经理|工程师|产品负责人|运营负责人))",
+            text, re.I | re.S,
+        )
         if match:
             return 10, [evidence(text, match)]
+        internship = re.search(
+            rf"(?:{pattern}.{{0,300}}(?:实习|intern)|(?:实习经历|internship).{{0,300}}{pattern})",
+            text, re.I | re.S,
+        )
+        if internship:
+            return 7, [evidence(text, internship)]
     match = re.search(r"(?:CTO|首席技术官|技术负责人|技术leader|tech lead|创始人|联合创始人).{0,50}(?:AI|大模型|智能体|生成式|AIGC)|(?:AI|大模型|智能体|生成式|AIGC).{0,50}(?:CTO|首席技术官|技术负责人|技术leader|tech lead|创始人|联合创始人)", text, re.I | re.S)
     if match:
         return 10, [evidence(text, match)]
-    match = re.search(r"(?:世界500强|上市公司|独角兽|行业头部|头部公司|知名公司)", text, re.I)
+    match = re.search(r"(?:曾任|任职|就职|加入).{0,60}(?:世界500强|上市公司|独角兽|行业头部|头部公司|知名公司)", text, re.I | re.S)
     return (7, [evidence(text, match)]) if match else (0, [])
 
 
@@ -152,7 +172,7 @@ def stability_score(text):
     explicit = re.search(r"(?:5|五)年.{0,24}(?:不超过|至多|最多).{0,8}(?:3|三)(?:次|跳)", text, re.I | re.S)
     if explicit:
         return 10, [evidence(text, explicit)]
-    tenure = re.search(r"(?:任职|在职|就职|工作|负责).{0,24}([1-9](?:\.\d+)?)\s*年|([1-9](?:\.\d+)?)\s*年.{0,24}(?:任职|在职|就职|工作|负责)", text, re.I | re.S)
+    tenure = re.search(r"(?:任职|在职|就职|工作经验|从业|经验).{0,16}(?<!\d)([1-9](?:\.\d+)?)(?!\d)\s*年|(?<!\d)([1-9](?:\.\d+)?)(?!\d)\s*年.{0,16}(?:任职|在职|就职|工作经验|从业|经验)", text, re.I | re.S)
     if not tenure:
         return 0, []
     years = float(tenure.group(1) or tenure.group(2))
@@ -273,6 +293,16 @@ def self_test():
     assert ai_leader["five_good"]["score"] >= 30
     experienced = score_candidate({"id": "e", "work_type": "正职", "resume_text": "早期曾在 AI 公司实习，后负责正式岗位。"})
     assert experienced["talent_value"]["tier"] != "intern"
+    intern = score_candidate({"id": "f", "work_type": "实习", "direction": "AI Agent / 增长 / 运营", "skills": ["GitHub Copilot", "ChatGPT"], "resume_text": "浙江财经大学本科在读。能使用 ChatGPT 和 GitHub Copilot 辅助整理内容；在门店实习，协助美团闪购开店，用户留存提升20%。"})
+    senior = score_candidate({"id": "g", "work_type": "正职", "resume_text": "7年内容营销经验，曾任京东零售运营负责人。独立搭建 Obsidian + 多 LLM 的 AI 内容工作流并持续运营，单篇文章近十万阅读；完成 AI 视频商业项目交付。"})
+    tsinghua = score_candidate({"id": "h", "work_type": "实习", "resume_text": "清华大学经济与金融本科。主导平台产品从0到1落地，月活用户20万、付费用户3000人。"})
+    assert intern["dimensions"]["company_quality"]["score"] == 0
+    assert intern["dimensions"]["stability"]["score"] == 0
+    assert intern["dimensions"]["ai_native_practice"]["score"] <= 3
+    assert senior["score"] >= intern["score"] + 20
+    assert tsinghua["dimensions"]["school_prestige"]["score"] == 15
+    assert display_name({"name": "教育经历", "emails": [{"subject": "李玲｜Bridge｜FDE｜简历投递"}]}) == "李玲"
+    assert display_name({"name": "13541139750", "emails": [{"subject": "张嘉一产品简历"}]}) == "张嘉一"
     assert all(sum(weights.values()) == 100 for weights in BENCHMARK_WEIGHTS.values())
     print("self-test ok")
 
