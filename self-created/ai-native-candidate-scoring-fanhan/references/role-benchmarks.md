@@ -1,4 +1,4 @@
-# Role benchmarks v3
+# Role benchmarks v3.1
 
 Every benchmark is deterministic. Unified uses the ten evidence dimensions directly. Each role benchmark combines an 80-point weighted evidence score with a 20-point role-fit evidence score. All roles retain the Five Good signals, then change the emphasis of AI-native, shipped, ownership and customer evidence.
 

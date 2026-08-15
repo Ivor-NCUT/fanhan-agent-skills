@@ -9,7 +9,7 @@ Produce a job-agnostic evidence score. Do not treat it as an employment decision
 
 ## Run
 
-1. Normalize only job-relevant evidence: all resume versions, projects, portfolio links, GitHub, skills, career facts, and work samples.
+1. Normalize only job-relevant source evidence: all resume versions, email bodies, projects, portfolio links, GitHub, career facts, and work samples. Do not score system-inferred direction or skill labels.
 2. Exclude name, photo, age, gender, ethnicity, nationality, marital/family status, health, disability, religion, political views, and contact details. Do not infer missing traits. Explicit education evidence contributes up to 15 points in the unified benchmark.
 3. Run:
 
@@ -29,6 +29,9 @@ The input may be one candidate object, an array, or `{ "candidates": [...] }`. F
 - Treat the 5-year/3-move stability rule as positive evidence only when chronology is explicit. Missing dates are unknown, not a negative score.
 - Talent-value and fee-multiple output prioritize headhunting effort; they never automate interview, rejection, recommendation, compensation or hiring.
 - No points for keyword repetition; each rubric signal scores once.
+- Tool-name mentions such as ChatGPT, Cursor, or Copilot prove basic usage only. Full AI-native credit requires evidence of building or operating a real AI workflow, system, product, or evaluation process.
+- Company brands count only with employment or internship context. Platform usage such as operating a shop on Meituan is not Meituan employment; internships receive partial company credit.
+- Calendar years are not tenure. Stability requires an explicit duration of professional experience or employment.
 - Missing evidence receives no points and lowers coverage; never fabricate evidence.
 - Keep JD fit separate. A high base score can still be wrong for a particular role.
 - Require human review before interview, rejection, recommendation, or hiring action.
