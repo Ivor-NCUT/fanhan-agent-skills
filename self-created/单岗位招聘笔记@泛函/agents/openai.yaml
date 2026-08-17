@@ -1,0 +1,4 @@
+interface:
+  display_name: "单岗位招聘笔记@泛函"
+  short_description: "把沟通记录和可选 JD 拆成逐岗位可发布小红书招聘笔记"
+  default_prompt: "Use $single-role-recruitment-note-fanhan to identify every confirmed role in these hiring materials and write one Xiaohongshu recruitment note per role."
