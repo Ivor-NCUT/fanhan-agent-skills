@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 设计导入Canva@泛函"
+  short_description: "把图片、HTML 和 SVG 稳定导入 Canva，并逐页验收排版与图层"
+  default_prompt: "Use $ai-design-import-canva-fanhan to import these design files into Canva and return one verified design."

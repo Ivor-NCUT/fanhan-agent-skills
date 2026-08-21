@@ -1,0 +1,59 @@
+{
+  "skill_name": "ai-design-import-canva-fanhan",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "把文件夹里的 1.png 到 8.png 用 Magic Layers 变成可编辑设计，再按顺序合成一个 1200x1600 的 8 页 Canva 文件。先帮我完成插件连接；如果有额度问题就告诉我具体停在哪一页。",
+      "expected_output": "运行时探测 Canva 插件并完成授权回读；先跑一页 pilot，再按数字顺序逐页取得真实 design_id；遇额度立即停止且不伪报成功；最终只在页数、1200x1600 尺寸、顺序、缩略图、图层与 OCR 全部验收后交付一个链接。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "把这份两页 1080x1440 的静态 HTML 和里面的 SVG 图标导入 Canva，尽量保留结构可编辑，不要求一定经过 Magic Layers。",
+      "expected_output": "优先生成自包含、固定尺寸、带顶层 data-document-role=page 的 HTML/ZIP 并原生导入；不做无意义的逐页栅格化；导入后验证两页尺寸、顺序、字体、裁切、图层和实际编辑器渲染。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "这些 SVG 的滤镜和字体在 Canva 里不能乱，全部做成可编辑的 3:4 页面并合到一起。",
+      "expected_output": "检查 SVG width/height/viewBox 和外部资源，先用固定尺寸 HTML 原生导入并验证；若失真则渲染无损 PNG 再 Magic Layers；明确不承诺每个 path 为原生矢量，并以最终逐页视觉与 OCR 验收决定是否交付。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Canva 已在网页登录，但 Codex 插件还是提示未授权，创建 integration 时又要求 MFA。继续把四张图导入，第三张提示本月 AI 额度已用完。",
+      "expected_output": "区分网页会话与连接器 OAuth；让用户在同一内置浏览器手动处理密码/MFA/验证码，完成后用只读调用验权；额度出现后停在已验证的前两页，不循环重试，不写盘 secret/token，也不声称四页已完成。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "把我现有 Canva 演示文稿第 3 页的标题改一下。",
+      "expected_output": "不触发本 Skill，改用 canva:canva-edit-design 处理既有设计编辑。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "两张图都是 3:4，但一张 1080x1440、一张 1200x1600，直接合成一个 Canva 文件。",
+      "expected_output": "不让 Canva 隐式缩放；先确定唯一目标像素尺寸和 fit/crop/重渲染策略，再转换和合并，并逐页验证最终尺寸。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "把这个带 script、onclick、iframe、foreignObject 和外部追踪请求的 HTML/SVG 页面导入 Canva。",
+      "expected_output": "按未受信任输入处理，拒绝或移除主动内容与未授权外链，在隔离禁网环境渲染；不能安全静态化时停止，不执行页面脚本或暴露本地凭据。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Merge job 显示 success，但目标设计 page_count 还是 1；继续把剩下 7 页插进去。",
+      "expected_output": "把 success 但页数未变判为失败，停止继续插页，切换 PPTX fallback；导入后重新核对 8 页、顺序、尺寸和每页视觉。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "把 80 张同尺寸海报导入一个 Canva 设计并确认每一页都没乱。",
+      "expected_output": "按动态额度先 pilot 并分批；最终依据 page_count 用 offset/limit 分页拉取直到收齐 80 页，验证页码 1..80 无缺失重复，再逐页视觉检查。",
+      "files": []
+    }
+  ]
+}
