@@ -749,7 +749,7 @@
     "folder": "lark-shared",
     "name": "lark-shared",
     "title": "lark-cli 共享规则",
-    "description": "Use when first setting up lark-cli, running auth login, switching user/bot identity (--as), handling permission denied or scope errors, needing to update lark-cli, or seeing _notice in JSON output.",
+    "description": "Use for lark-cli setup/auth tasks: auth login/status/logout, user vs bot identity, business-domain permissions (--domain, including all/docs/drive), missing scopes, revoking authorization, or handling _notice JSON.",
     "category": "downloaded",
     "display_title": "lark-cli 共享规则",
     "one_liner": "用来连接飞书里的具体工作对象。",
@@ -1057,10 +1057,10 @@
     "folder": "brainstorming",
     "name": "brainstorming",
     "title": "Brainstorming Ideas Into Designs",
-    "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
+    "description": "澄清尚未成形的产品或设计方向，比较会实质影响结果的方案。用户明确要求头脑风暴、讨论选项或需求缺少关键业务选择时使用；已明确的实现、修复和常规改动直接交给开发入口。",
     "category": "downloaded",
     "display_title": "Brainstorming Ideas Into Designs",
-    "one_liner": "用来把固定工作流程封装成可复用能力。",
+    "one_liner": "探索尚未明确的目标与设计选择；已授权实施时直接执行。",
     "repo_path": "downloaded/brainstorming"
   },
   {

@@ -1,124 +1,21 @@
 ---
 name: skill-github-publisher
-description: Publish newly created Agent skills to the user's GitHub skill repository. Use this skill whenever a new skill has been created with skill-creator and the user wants it uploaded, published, pushed, synced, or added to https://github.com/Ivor-NCUT/fanhan-agent-skills. It verifies local skill files, prepares README/evals when useful, commits or uploads the skill directory, and falls back to GitHub REST API if GitHub CLI or git push fails in this environment.
+description: 将已完成的新建或更新 Skill 发布到用户指定的 GitHub 仓库。用于明确发布请求或已有匹配的长期发布授权；先验证范围、许可和私有材料，再通过 gh 或 gh api 发布并回读。
 metadata:
   requires:
-    bins: ["git", "gh", "curl"]
+    bins: ["git", "gh"]
 ---
 
 # Skill GitHub Publisher
 
-## 目标
+默认目标为 `Ivor-NCUT/fanhan-agent-skills`；用户指定目标优先。此入口只处理发布，不承担重新设计或全套教程交付。
 
-把新创建的 Agent skill 同步到用户的 GitHub 仓库：
+1. 从当前任务确定 Skill 目录、目标路径和授权范围。只有无法确认是哪份成果时才询问；已明确授权不再次询问是否发布。
+2. 验证 `SKILL.md`、相关脚本／引用和已有 evals。检查许可证与公开范围；排除密钥、私有材料、临时产物和依赖目录。缺少可公开依据只暂停发布，继续完成本地成果。
+3. 查现有工作区和仓库状态，保留用户未提交改动。只发布本任务文件；README 与示例仅在使用需要时补充。
+4. GitHub 远端全部通过 `gh`／`gh api`；克隆用 `gh repo clone`，查询用 `gh repo view`、`gh api`。本地提交和差异检查可用 `git`，不直接执行 git 网络命令。
+5. 发布文件时，优先复用仓库已有合规发布工具；否则用 `gh api` 的 Git Database blobs → tree → commit → ref 更新，基于读取的目标分支 head 构建一次完整变更，保留所有非目标文件。使用结构化参数／JSON 文件，不拼接 shell 字符串，不强制更新 ref。
+6. 并发导致 head 改变时重新读取、保留双方意图再构建；超时先核对远端 commit/tree 和文件内容，已成功则不重复提交。需要 PR 时通过 `gh pr create`，是否合并服从已有授权与仓库规则。
+7. 回读目标路径、提交及文件内容，确认与本次成果一致后交付链接。认证或权限阻塞时说明具体缺项，不能用 curl、固定 IP、SDK 或其他身份绕过。
 
-```text
-https://github.com/Ivor-NCUT/fanhan-agent-skills
-```
-
-这个 skill 只处理发布和同步，不负责设计 skill 内容。内容创建和修改完成后再使用。
-
-## 输入
-
-需要知道新 skill 的本地目录。默认位置：
-
-```text
-/Users/fanhan/.agents/skills/<skill-directory>
-```
-
-如果用户没有给路径，从最近创建或修改的 skill 目录推断。推断不稳时只问一个问题：
-
-> 要发布的是哪个 skill 目录？
-
-## 发布前检查
-
-检查这些文件：
-
-- `SKILL.md` 必须存在。
-- frontmatter 至少有 `name` 和 `description`。
-- 如果 skill 用法不直观，补一个简短 `README.md`。
-- 如果已经有 `evals/evals.json`，确认 JSON 可解析。
-- 不上传 `.DS_Store`、临时输出、大型中间文件、token、密钥或私人素材。
-
-如果 `SKILL.md` 缺少必要字段，先修好再发布。
-
-## 首选发布路径：本地仓库或 GitHub CLI
-
-优先判断本地是否已有目标仓库：
-
-```bash
-find /Users/fanhan -type d -name fanhan-agent-skills -maxdepth 6 2>/dev/null
-```
-
-如果找到本地仓库：
-
-1. 把 skill 目录复制或同步到仓库中的同名目录。
-2. 查看 `git status`，确认只包含本次相关文件。
-3. 提交信息使用 `add <skill-name> skill` 或 `update <skill-name> skill`。
-4. 推送到远端。
-
-如果没有本地仓库，使用 GitHub CLI 克隆或直接创建文件：
-
-```bash
-gh repo clone Ivor-NCUT/fanhan-agent-skills
-```
-
-如果 `gh` 认证正常，用常规 git 提交和 push。
-
-## 兜底发布路径：GitHub REST API
-
-本机曾出现过 GitHub CLI keyring token 失效、默认 DNS 路径连接 GitHub 失败的情况。遇到这些问题时，不要反复重试同一条失败命令：
-
-- `gh auth status` 显示 token/keyring 异常。
-- `gh repo clone` 或 `gh repo create` 对 `api.github.com` 返回 EOF。
-- `git push` 对 `github.com:443` TLS 失败。
-
-可行兜底是 GitHub REST API，必要时显式指定 API 主机解析：
-
-```bash
-curl --http1.1 --tlsv1.2 --resolve api.github.com:443:140.82.112.5 ...
-```
-
-使用 REST API 时：
-
-1. 先确认可用 token 来源，不要在输出里展示完整 token。
-2. 对每个要上传的文件读取当前远端 SHA；有 SHA 则更新，无 SHA 则创建。
-3. 路径保持为 `<skill-directory>/<relative-file-path>`。
-4. commit message 写清新增或更新的 skill。
-
-## README 最小模板
-
-如果需要补 README，用这个结构：
-
-```markdown
-# <skill name>
-
-<一句话说明这个 skill 解决什么问题。>
-
-## Files
-
-- `SKILL.md`：skill 主说明。
-- `evals/evals.json`：基础测试提示词。
-
-## Usage
-
-安装到 Agent skills 目录后，在相关任务中按 description 自动触发。
-```
-
-## 完成后交付
-
-告诉用户：
-
-- 已发布的 skill 名称。
-- 本地路径。
-- GitHub 仓库链接或具体目录链接。
-- 使用的是常规 git/gh 还是 REST API 兜底。
-
-## 自检清单
-
-- 只发布本次相关 skill 文件。
-- 没有上传密钥、token、私人素材或临时文件。
-- 远端路径和本地目录名一致。
-- README 和 evals 如存在，可正常打开。
-- GitHub 链接返回给用户。
-
+最终说明已发布内容、目标链接与验证；未完成发布则明确本地已完成和远端阻塞，不把提交成功等同于目标交付。

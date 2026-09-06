@@ -138,7 +138,7 @@
 | Web Artifacts Builder | 用来生成网页、视觉稿或前端界面。 | `downloaded/web-artifacts-builder` |
 | Web Application Testing | 用来生成网页、视觉稿或前端界面。 | `downloaded/webapp-testing` |
 | Requirements for Outputs | 用来读取、整理或生成对应格式的办公文件。 | `downloaded/xlsx` |
-| Brainstorming Ideas Into Designs | 用来把固定工作流程封装成可复用能力。 | `downloaded/brainstorming` |
+| Brainstorming Ideas Into Designs | 探索尚未明确的目标与设计选择；已授权实施时直接执行。 | `downloaded/brainstorming` |
 | cubox-cli | 用来生成网页、视觉稿或前端界面。 | `downloaded/cubox` |
 | dumbledore：邓布利多知识库主入口（codex） | 用来管理知识库仓库和相关发布流程。 | `downloaded/dumbledore` |
 | dumbledore-onboarding：安装与私有仓库初始化 | 用来管理知识库仓库和相关发布流程。 | `downloaded/dumbledore-onboarding` |
