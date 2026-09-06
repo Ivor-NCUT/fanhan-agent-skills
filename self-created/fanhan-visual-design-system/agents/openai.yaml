@@ -1,0 +1,7 @@
+interface:
+  display_name: "泛函视觉设计系统"
+  short_description: "按泛函个人网站设计系统生成网页、演示文稿与社交视觉物料"
+  icon_small: "./assets/fanhan-skill-icon.svg"
+  icon_large: "./assets/fanhan-skill-icon.svg"
+  brand_color: "#B8D98A"
+  default_prompt: "使用 $fanhan-visual-design-system 按泛函视觉设计系统创建一份物料。"
