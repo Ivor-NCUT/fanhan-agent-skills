@@ -1,0 +1,7 @@
+interface:
+  display_name: "泛函个人网站内容更新"
+  short_description: "从七个导航栏目中选择并按专属模板更新泛函个人网站内容"
+  default_prompt: "使用 $fanhan-personal-site-updater 更新泛函个人网站的一个导航栏目。"
+
+policy:
+  allow_implicit_invocation: true

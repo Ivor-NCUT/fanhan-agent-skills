@@ -1734,5 +1734,19 @@
     "display_title": "候选人入库@泛函",
     "one_liner": "把候选人投递邮件和简历/作品集解析结果写入飞书多维表格候选人表。",
     "repo_path": "self-created/候选人入库@泛函"
+  },
+  {
+    "root": "/Users/baichun/.codex/skills",
+    "root_label": "codex",
+    "rel_dir": "fanhan-personal-site-updater",
+    "dir": "/Users/baichun/.codex/skills/fanhan-personal-site-updater",
+    "folder": "fanhan-personal-site-updater",
+    "name": "fanhan-personal-site-updater",
+    "title": "泛函个人网站内容更新",
+    "description": "更新泛函个人网站的七个编辑型导航栏目。用户要新增、修改或下线候选人代表、泛函的朋友们、内容与课程、精选活动、社区或俱乐部、影视艺术、书籍时使用；公司与岗位不在本 Skill 范围内。",
+    "category": "self-created",
+    "display_title": "泛函个人网站内容更新",
+    "one_liner": "从七个编辑栏目中选择，并按对应资料模板更新泛函个人网站。",
+    "repo_path": "self-created/fanhan-personal-site-updater"
   }
 ]
