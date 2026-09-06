@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="泛函视觉设计系统">
+  <rect width="256" height="256" rx="56" fill="#fffef0"/>
+  <circle cx="128" cy="128" r="78" fill="#b8d98a" stroke="#1b1b19" stroke-width="12"/>
+  <text x="128" y="151" fill="#1b1b19" font-family="Georgia, serif" font-size="82" font-weight="700" text-anchor="middle">函</text>
+</svg>

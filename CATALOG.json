@@ -1748,5 +1748,19 @@
     "display_title": "泛函个人网站内容更新",
     "one_liner": "从七个编辑栏目中选择，并按对应资料模板更新泛函个人网站。",
     "repo_path": "self-created/fanhan-personal-site-updater"
+  },
+  {
+    "root": "/Users/baichun/.codex/skills",
+    "root_label": "codex",
+    "rel_dir": "fanhan-visual-design-system",
+    "dir": "/Users/baichun/.codex/skills/fanhan-visual-design-system",
+    "folder": "fanhan-visual-design-system",
+    "name": "fanhan-visual-design-system",
+    "title": "泛函视觉设计系统",
+    "description": "使用泛函个人网站定稿后的视觉系统创建或改造网页、HTML 物料、PPT/演示、3:4 卡片与长图海报。用户要求“泛函视觉设计系统”“泛函风格”“泛函个人网站风格”或跨载体复用该品牌视觉时使用；纯内容策划或与该品牌无关的通用设计不触发。",
+    "category": "self-created",
+    "display_title": "泛函视觉设计系统",
+    "one_liner": "把泛函个人网站的品牌视觉复用到网页、演示、3:4 卡片与长图海报。",
+    "repo_path": "self-created/fanhan-visual-design-system"
   }
 ]
