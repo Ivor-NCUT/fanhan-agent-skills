@@ -1,10 +1,10 @@
 # 泛函 Agent Skills
 
-这个仓库收集了泛函本机正在使用的一组 Agent skill，共 128 个。
+这个仓库收集了泛函本机正在使用的一组 Agent skill，共 129 个。
 
 我把它们分成两类：
 
-- `self-created/`：泛函自己沉淀出来的定制 skill，共 36 个。
+- `self-created/`：泛函自己沉淀出来的定制 skill，共 37 个。
 - `downloaded/`：下载或安装来的通用 skill，共 92 个，包含 dbs 工具箱。
 
 这些 skill 覆盖内容创作、飞书工作流、会议纪要、视频素材、咨询交付、前端页面、文件处理、GitHub 工作流等场景。适合拿来观察一个科技从业者如何把高频工作拆成可复用的 Agent 能力。
@@ -58,6 +58,8 @@
 | Frontend Slides | 用来生成演示稿和网页幻灯片。 | `self-created/frontend-slides_fanhan` |
 | 自然流编导@泛函（codex） | 用来处理视频、口播、访谈或逐字稿素材。 | `self-created/natural-flow-director-fanhan` |
 | 启发式访谈口播粗剪@泛函 | 用来处理视频、口播、访谈或逐字稿素材。 | `self-created/启发式访谈口播粗剪@泛函` |
+
+| 泛函任务管理 | 从飞书、微信消息与截图中整理本人任务，并读取 memU 偏好安排日历。 | `self-created/fanhan-task-management` |
 
 ## 下载或安装的通用 Skill
 

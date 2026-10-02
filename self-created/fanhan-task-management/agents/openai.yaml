@@ -1,0 +1,3 @@
+interface:
+  display_name: "泛函任务管理"
+  short_description: "把聊天和截图中的事项整理为飞书任务，并按偏好排入日历"

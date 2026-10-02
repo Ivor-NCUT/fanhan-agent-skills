@@ -1734,5 +1734,19 @@
     "display_title": "候选人入库@泛函",
     "one_liner": "把候选人投递邮件和简历/作品集解析结果写入飞书多维表格候选人表。",
     "repo_path": "self-created/候选人入库@泛函"
+  },
+  {
+    "root": "/Users/fanhan/.agents/skills",
+    "root_label": "agents",
+    "rel_dir": "fanhan-task-management",
+    "dir": "/Users/fanhan/.agents/skills/fanhan-task-management",
+    "folder": "fanhan-task-management",
+    "name": "fanhan-task-management",
+    "title": "泛函任务管理",
+    "description": "从飞书、微信转发聊天记录或截图中提炼本人待办，维护飞书任务详情，并按用户的日程偏好规划飞书日历。用于消息转任务、任务整理和日常事务排程。",
+    "category": "self-created",
+    "display_title": "泛函任务管理",
+    "one_liner": "把聊天和截图中的事项整理为飞书任务，并按偏好排入日历。",
+    "repo_path": "self-created/fanhan-task-management"
   }
 ]
