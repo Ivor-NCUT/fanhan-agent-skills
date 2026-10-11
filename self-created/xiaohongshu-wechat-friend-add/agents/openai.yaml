@@ -1,0 +1,4 @@
+interface:
+  display_name: "添加小红书来的人为微信好友"
+  short_description: "从飞书待办读取小红书候选人，操作微信添加好友并完成原任务"
+  default_prompt: "使用 $xiaohongshu-wechat-friend-add，处理分配给我的小红书候选人加微信任务，成功发出申请或确认已有好友后完成对应飞书任务。"

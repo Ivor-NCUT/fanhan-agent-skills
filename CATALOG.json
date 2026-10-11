@@ -1748,5 +1748,16 @@
     "display_title": "泛函任务管理",
     "one_liner": "把聊天和截图中的事项整理为飞书任务，并按偏好排入日历。",
     "repo_path": "self-created/fanhan-task-management"
+  },
+  {
+    "rel_dir": "xiaohongshu-wechat-friend-add",
+    "folder": "xiaohongshu-wechat-friend-add",
+    "name": "xiaohongshu-wechat-friend-add",
+    "title": "添加小红书来的人为微信好友",
+    "description": "读取分配给用户的未完成飞书加好友任务，通过 computer use 操作微信，核实申请、备注和朋友圈权限后完成原任务。",
+    "category": "self-created",
+    "display_title": "添加小红书来的人为微信好友",
+    "one_liner": "飞书待办 → 微信添加小红书候选人 → 核实成功后勾掉原任务。",
+    "repo_path": "self-created/xiaohongshu-wechat-friend-add"
   }
 ]
