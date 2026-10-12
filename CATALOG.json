@@ -1759,5 +1759,15 @@
     "display_title": "添加小红书来的人为微信好友",
     "one_liner": "飞书待办 → 微信添加小红书候选人 → 核实成功后勾掉原任务。",
     "repo_path": "self-created/xiaohongshu-wechat-friend-add"
+  },
+  {
+    "folder": "ai-talent-search-fanhan",
+    "name": "ai-talent-search-fanhan",
+    "title": "AI 人才搜索@泛函",
+    "description": "从 JD 与招聘妙记发现跨平台人才和播客嘉宾，批处理与可选 JEV 预筛，核验原文证据后生成 X 建联草稿。",
+    "category": "self-created",
+    "display_title": "AI 人才搜索@泛函",
+    "one_liner": "用作品与播客证据搜索人才，批量研究并生成可核验的建联草稿。",
+    "repo_path": "self-created/ai-talent-search-fanhan"
   }
 ]

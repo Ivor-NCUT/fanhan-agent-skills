@@ -1,11 +1,11 @@
 # 泛函 Agent Skills
 
-这个仓库收集了泛函本机正在使用的一组 Agent skill，共 129 个。
+这个仓库收集了泛函本机正在使用的一组 Agent skill。
 
 我把它们分成两类：
 
-- `self-created/`：泛函自己沉淀出来的定制 skill，共 37 个。
-- `downloaded/`：下载或安装来的通用 skill，共 92 个，包含 dbs 工具箱。
+- `self-created/`：泛函自己沉淀出来的定制 skill。
+- `downloaded/`：下载或安装来的通用 skill，包含 dbs 工具箱。
 
 这些 skill 覆盖内容创作、飞书工作流、会议纪要、视频素材、咨询交付、前端页面、文件处理、GitHub 工作流等场景。适合拿来观察一个科技从业者如何把高频工作拆成可复用的 Agent 能力。
 
@@ -26,6 +26,7 @@
 
 | Skill | 一句话介绍 | 仓库路径 |
 |---|---|---|
+| AI 人才搜索@泛函 | 从 JD 与招聘妙记搜索作品、经历与播客嘉宾，批处理与可选 JEV 预筛，核验后生成 X 建联草稿。 | `self-created/ai-talent-search-fanhan` |
 | skill 开发与迭代规范 | 用软件开发最佳实践管理复杂 Agent skill 的需求澄清、阶段文档和 GitHub 迭代。 | `self-created/skill-开发与迭代规范` |
 | 简历 + 作品集文本解析@泛函 | 把候选人邮件材料、简历、作品集和网页/社媒/视频证据解析成 JSON + Markdown。 | `self-created/简历+作品集文本解析@泛函` |
 | 邮件智能分类入库@泛函 | 把上游读取出的邮件标题、正文和附件信息分类成候选人、招聘公司、猎头伙伴等可入库记录。 | `self-created/邮件智能分类入库@泛函` |

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 人才搜索@泛函"
+  short_description: "从 JD 和招聘妙记搜索作品与播客嘉宾，以可核验的证据生成候选名单和建联草稿"
+  default_prompt: "使用 $ai-talent-search-fanhan，根据我的 JD 和招聘妙记搜索匹配人才，核验原始证据，并生成 X 建联草稿。"

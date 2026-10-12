@@ -1,0 +1,20 @@
+{
+  "job_id": "fictional-agent-engineer",
+  "requirements_version": "demo-v1",
+  "requirements": [
+    {"id": "R1", "text": "有工具调用失败恢复的本人实践证据", "kind": "must", "dimension": "ability",
+     "source_refs": [{"document": "示例 JD", "locator": "职责第 1 条", "quote": "负责工具调用失败恢复"}]},
+    {"id": "R2", "text": "当前工作地点可核实", "kind": "must", "dimension": "condition",
+     "source_refs": [{"document": "示例妙记", "locator": "00:01:00", "quote": "地点需后续沟通确认"}]}
+  ],
+  "open_questions": ["该文件是虚构离线示例，真实岗位请替换全部业务条件"],
+  "public_opportunity": {"description": "虚构示例：AI 团队希望解决工具调用可靠性问题"},
+  "budget_usd": 8,
+  "limits": {"max_materials": 150, "max_fetches": 150, "max_query_pages": 3,
+             "max_candidates_review": 50, "shortlist_target": 20},
+  "queries": [],
+  "tools": {},
+  "seeds": [],
+  "jev": {"enabled": false, "model": "jev-latest", "confidence_threshold": 0.85, "reserve_usd": 0.02},
+  "supplement_calls": []
+}
