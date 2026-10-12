@@ -1,0 +1,7 @@
+interface:
+  display_name: "Skill 动画宣传片@泛函"
+  short_description: "把 Agent Skill 制作为 Codex 浅色苹果式动画宣传片"
+  brand_color: "#4C8FD9"
+  default_prompt: "使用 $skill-promo-film-fanhan，根据目标 Skill 和我选定的 BGM 生成竖屏动画宣传片；如果我还没给剧本，先问我是否有剧本。"
+policy:
+  allow_implicit_invocation: true

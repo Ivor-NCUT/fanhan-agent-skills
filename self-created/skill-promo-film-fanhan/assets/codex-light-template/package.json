@@ -1,0 +1,13 @@
+{
+  "name": "skill-promo-film-project",
+  "private": true,
+  "scripts": {
+    "check": "npx hyperframes@0.8.35 check . --samples 15",
+    "preview": "npx hyperframes@0.8.35 preview . --background",
+    "render:draft": "npx hyperframes@0.8.35 render . --quality draft --output renders/draft.mp4",
+    "render": "npx hyperframes@0.8.35 render . --quality high --output renders/final.mp4"
+  },
+  "devDependencies": {
+    "gsap": "3.14.2"
+  }
+}

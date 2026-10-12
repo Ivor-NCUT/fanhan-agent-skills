@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Promo Film · Codex Light Template</title>
+    <script src="node_modules/gsap/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "PingFang SC"; src: local("PingFang SC"); }
+      :root {
+        --ink: #17191d;
+        --assistant: #6f7680;
+        --muted: #9299a3;
+        --line: #e6e9ed;
+        --panel: #ffffff;
+        --soft: #f4f6f8;
+        --blue: #78aee8;
+        --blue-deep: #4c8fd9;
+        --blue-soft: #eaf3fc;
+        --shadow: 0 32px 80px rgba(40, 54, 72, .12), 0 4px 12px rgba(40, 54, 72, .05);
+      }
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", sans-serif; background: #edf1f5; }
+      #codex-keyframes { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: var(--ink); }
+      .frame { position: absolute; inset: 0; overflow: hidden; padding: 76px 66px; background:
+        radial-gradient(circle at 83% 8%, rgba(180, 215, 247, .46), transparent 25%),
+        radial-gradient(circle at 12% 92%, rgba(209, 220, 232, .55), transparent 28%),
+        linear-gradient(160deg, #f7f9fb 0%, #edf2f6 58%, #f8fafc 100%); }
+      .frame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.68), transparent 30%, rgba(255,255,255,.24)); mix-blend-mode: screen; }
+      .codex { position: relative; z-index: 2; width: 948px; height: 1768px; overflow: hidden; border: 1px solid rgba(143, 151, 162, .28); border-radius: 38px; background: rgba(255,255,255,.97); box-shadow: var(--shadow); }
+      .topbar { height: 104px; display: flex; align-items: center; gap: 15px; padding: 0 28px; border-bottom: 1px solid var(--line); color: #626872; background: rgba(255,255,255,.92); }
+      .traffic { width: 19px; height: 19px; border-radius: 50%; }
+      .traffic.red { background: #ff5f57; }.traffic.yellow { background: #febc2e; }.traffic.green { background: #28c840; }
+      .nav-icon { width: 34px; height: 34px; margin-left: 18px; border: 2px solid #9aa0a8; border-radius: 9px; }
+      .task-title { min-width: 0; flex: 1; margin-left: 10px; color: #30343a; font-size: 25px; font-weight: 620; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .top-action { font-size: 21px; color: #8c929b; }
+      .chat { position: absolute; inset: 104px 0 182px; overflow: hidden; padding: 70px 72px; }
+      .composer { position: absolute; left: 54px; right: 54px; bottom: 42px; height: 116px; display: flex; align-items: center; padding: 0 30px; border: 1px solid #e4e7eb; border-radius: 30px; background: rgba(255,255,255,.98); box-shadow: 0 14px 34px rgba(48,58,72,.08); color: #a2a7ae; font-size: 25px; }
+      .composer::before { content: "+"; margin-right: 24px; color: #555c65; font-size: 34px; font-weight: 300; }
+      .send-button { margin-left: auto; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #aeb4bc; font-size: 26px; }
+      .send-button.active { background: var(--blue-deep); box-shadow: 0 8px 20px rgba(76,143,217,.25); }
+      .user-bubble { width: max-content; max-width: 76%; margin-left: auto; padding: 18px 25px; border-radius: 26px; background: #f0f1f3; color: #34383e; font-size: 26px; font-weight: 520; line-height: 1.45; }
+      .assistant { margin-top: 48px; color: var(--assistant); font-size: 28px; line-height: 1.62; letter-spacing: -.01em; }
+      .assistant strong { color: #555c65; font-weight: 650; }
+      .assistant .fade-word { color: #b8bec5; }
+      .assistant .char { display: inline; opacity: 0; }
+      .typed-copy, .typing { clip-path: inset(0 100% 0 0); }
+      .typed-copy { display: inline-block; white-space: nowrap; }
+      .cursor { display: inline-block; width: 3px; height: 34px; margin-left: 4px; vertical-align: -6px; border-radius: 2px; background: var(--blue-deep); }
+      .eyebrow { margin-bottom: 16px; color: #a0a6ae; font-size: 16px; font-weight: 720; letter-spacing: .15em; text-transform: uppercase; }
+      .file-card { margin-top: 28px; padding: 26px 28px; border: 1px solid var(--line); border-radius: 23px; background: #fff; box-shadow: 0 10px 28px rgba(35,48,65,.06); }
+      .file-head { display: flex; align-items: center; gap: 17px; }
+      .file-icon { width: 48px; height: 48px; position: relative; flex: none; border-radius: 14px; background: #f1f3f5; }
+      .file-icon::before { content: ""; position: absolute; left: 14px; top: 11px; width: 19px; height: 24px; border: 2px solid #7e8791; border-radius: 4px; background: #fff; }
+      .file-icon::after { content: ""; position: absolute; left: 18px; top: 18px; width: 11px; height: 2px; border-radius: 2px; background: #a2a9b1; box-shadow: 0 6px 0 #a2a9b1, 0 12px 0 #a2a9b1; }
+      .file-name { font-size: 25px; font-weight: 650; color: #34393f; }
+      .file-state { margin-left: auto; color: var(--blue-deep); font-size: 19px; font-weight: 650; }
+      .file-copy { margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); color: #6f7680; font-size: 20px; line-height: 1.75; }
+      .file-copy b { color: #454b53; }
+      .progress { height: 6px; margin-top: 24px; overflow: hidden; border-radius: 99px; background: #edf0f3; }
+      .progress > i { display: block; width: 78%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #9fc9f3, #5c9de3); }
+      .status-row { display: flex; align-items: center; gap: 12px; margin-top: 22px; color: #8d949d; font-size: 20px; }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 7px var(--blue-soft); }
+      .chip-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+      .chip { padding: 12px 17px; border: 1px solid #dce6f0; border-radius: 999px; background: #f6faff; color: #58738f; font-size: 19px; font-weight: 590; }
+      .rule { height: 1px; margin: 34px 0; background: var(--line); }
+      .ghost-lines { display: grid; gap: 12px; margin-top: 18px; }
+      .ghost-lines i { display: block; height: 9px; border-radius: 99px; background: #edf0f3; }
+      .ghost-lines i:nth-child(2) { width: 88%; }.ghost-lines i:nth-child(3) { width: 68%; }
+
+      .install { margin-top: 54px; padding: 34px; border: 1px solid #dfe4e9; border-radius: 27px; background: linear-gradient(145deg,#fff,#f5f8fb); box-shadow: 0 22px 50px rgba(44,60,79,.08); }
+      .install-title { display: flex; align-items: center; gap: 18px; color: #40464e; font-size: 28px; font-weight: 660; }
+      .skill-glyph { width: 55px; height: 55px; display: grid; place-items: center; border: 1px solid #c9d9ea; border-radius: 16px; color: var(--blue-deep); background: var(--blue-soft); font-size: 24px; }
+      .install-meta { margin: 14px 0 0 73px; color: #939aa3; font-size: 19px; }
+
+      .split { display: grid; grid-template-columns: 1.03fr .97fr; height: 100%; }
+      .split > div { min-width: 0; }
+      .split-left { padding-right: 38px; border-right: 1px solid var(--line); }
+      .split-right { padding-left: 38px; }
+      .question { color: #4f5660; font-size: 27px; font-weight: 650; line-height: 1.5; }
+      .answer { margin-top: 22px; color: #777e87; font-size: 24px; line-height: 1.65; }
+      .marker { padding: 0 3px; background: linear-gradient(transparent 55%, rgba(180,215,248,.58) 55%); }
+      .metric { color: #4f83bc; font-weight: 700; }
+      .doc-page { padding: 34px; border: 1px solid #dfe4e8; border-radius: 25px; background: #fff; box-shadow: 0 18px 44px rgba(40,54,70,.08); }
+      .doc-page h2 { margin: 7px 0 8px; color: #30353b; font-size: 31px; }
+      .doc-page h3 { margin: 28px 0 12px; color: #59616b; font-size: 19px; }
+      .doc-page p { margin: 7px 0; color: #767d86; font-size: 18px; line-height: 1.55; }
+      .pen { position: absolute; width: 72px; height: 13px; border-radius: 10px; background: linear-gradient(90deg, #bec6ce 0 78%, #6b7784 78%); box-shadow: 0 8px 16px rgba(45,55,68,.16); }
+
+      .strategy { margin-top: 30px; padding: 30px; border: 1px solid #dfe6ed; border-radius: 28px; background: linear-gradient(145deg,#fff,#f2f7fb); }
+      .strategy-line { display: flex; align-items: center; gap: 18px; padding: 17px 0; border-bottom: 1px solid #e8ecf0; color: #6f7680; font-size: 21px; }
+      .strategy-line:last-child { border-bottom: 0; }
+      .strategy-line b { min-width: 105px; color: #3e454d; }
+
+      .web-field { position: absolute; inset: 104px 0 0; overflow: hidden; background: radial-gradient(circle at 50% 25%,rgba(211,232,250,.92),rgba(240,247,252,.48) 34%,rgba(235,242,248,.18) 58%),linear-gradient(180deg,#fbfdff,#e8f0f6); }
+      .web-field::before { content: ""; position: absolute; left: 50%; top: 356px; width: 940px; height: 750px; transform: translateX(-50%); border: 1px solid rgba(116,157,197,.14); border-radius: 50%; background: radial-gradient(ellipse at center,rgba(255,255,255,.82),rgba(185,213,237,.2) 46%,rgba(185,213,237,0) 70%); box-shadow: inset 0 0 90px rgba(119,165,204,.08),0 80px 130px rgba(72,109,142,.1); }
+      .orbit-stage { position: absolute; left: 50%; top: 180px; width: 1020px; height: 1120px; transform: translateX(-50%) rotateX(-7deg); perspective: 1450px; transform-style: preserve-3d; }
+      .web-deck { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+      .web-card { position: absolute; left: 360px; top: 278px; width: 300px; height: 410px; padding: 22px; overflow: hidden; border: 1px solid rgba(207,219,230,.95); border-radius: 24px; background: rgba(255,255,255,.98); box-shadow: 0 28px 65px rgba(42,59,78,.15); transform: rotateY(calc(var(--slot) * 40deg)) translateZ(390px); transform-style: preserve-3d; }
+      .web-card > * { backface-visibility: hidden; }
+      .web-card:nth-child(1) { --slot: -4; }
+      .web-card:nth-child(2) { --slot: -3; }
+      .web-card:nth-child(3) { --slot: -2; }
+      .web-card:nth-child(4) { --slot: -1; }
+      .web-card:nth-child(5) { --slot: 0; border-color: #9ec8ec; box-shadow: 0 38px 90px rgba(54,102,147,.26); }
+      .web-card:nth-child(6) { --slot: 1; }
+      .web-card:nth-child(7) { --slot: 2; }
+      .web-card:nth-child(8) { --slot: 3; }
+      .web-card:nth-child(9) { --slot: 4; }
+      .orbit-caption { position: absolute; left: 0; right: 0; bottom: 170px; color: #7890a7; font-size: 19px; letter-spacing: .06em; text-align: center; }
+      .browser-dots { display: flex; gap: 7px; margin-bottom: 23px; }.browser-dots i { width: 8px; height: 8px; border-radius: 50%; background: #d8dde3; }
+      .url { height: 24px; margin-bottom: 30px; border-radius: 8px; background: #f0f3f6; }
+      .company { color: #9ba2ab; font-size: 15px; letter-spacing: .09em; }
+      .job-title { margin-top: 20px; color: #2f353b; font-size: 27px; font-weight: 700; }
+      .job-meta { margin-top: 10px; color: #6f90b1; font-size: 16px; }
+      .job-rule { height: 1px; margin: 24px 0; background: #e5e9ed; }
+      .job-copy { color: #7d848d; font-size: 16px; line-height: 1.65; }
+      .job-copy b { color: #4b535c; }
+
+      .jd-layout { display: grid; height: 100%; }
+      .jd-layout.focus-left { grid-template-columns: 1fr; }
+      .jd-layout.focus-right { grid-template-columns: 82px 1fr; gap: 22px; }
+      .jd-rail { display: flex; align-items: center; justify-content: center; border-right: 1px solid #dfe5eb; color: #8ca4bc; font-size: 14px; font-weight: 700; letter-spacing: .16em; writing-mode: vertical-rl; }
+      .assistant-panel { padding: 32px; border: 1px solid #e1e5ea; border-radius: 26px; background: #fbfcfd; }
+      .jd-panel { padding: 30px; overflow: hidden; border: 1px solid #dae1e8; border-radius: 26px; background: #fff; box-shadow: 0 18px 46px rgba(42,57,74,.08); }
+      .jd-layout.focus-right .jd-panel { padding: 42px 44px; }
+      .jd-layout.focus-right .job-title { font-size: 36px; }
+      .jd-layout.focus-right .job-copy { font-size: 22px; line-height: 1.75; }
+      .jd-layout.focus-right .highlight-line { font-size: 22px; }
+      .highlight-line { margin: 25px -10px 0; padding: 14px 10px; border-radius: 9px; color: #44515e; background: linear-gradient(90deg, rgba(191,220,248,.72), rgba(226,239,251,.32)); font-size: 18px; font-weight: 650; line-height: 1.55; }
+
+      .resume-workspace { display: grid; grid-template-columns: .72fr 1.28fr; gap: 24px; height: 100%; }
+      .resume-workspace .file-name { font-size: 20px; line-height: 1.35; }
+      .resume-mini { padding: 26px; border: 1px solid #dce2e8; border-radius: 24px; background: #fff; box-shadow: 0 18px 42px rgba(45,58,73,.08); }
+      .resume-mini h2 { margin: 0; font-size: 29px; }.resume-mini small { color: #8b929b; }
+      .resume-section { margin-top: 24px; padding-top: 18px; border-top: 1px solid #e3e7eb; }
+      .resume-section h3 { margin: 0 0 11px; color: #6884a0; font-size: 16px; letter-spacing: .08em; }
+      .resume-section p { margin: 0; color: #707780; font-size: 15px; line-height: 1.62; }
+      .locked { opacity: .66; }
+      .changed { padding: 16px; border-radius: 13px; background: #f2f7fc; box-shadow: inset 3px 0 0 #88b9e8; }
+      .before-after { display: grid; gap: 18px; }
+      .compare { padding: 23px; border: 1px solid #e0e5ea; border-radius: 22px; background: #fff; }
+      .compare.after { border-color: #cbdff1; background: #f8fbfe; box-shadow: 0 16px 36px rgba(70,112,153,.08); }
+      .compare-label { color: #9aa1aa; font-size: 14px; font-weight: 700; letter-spacing: .15em; }
+      .compare p { color: #858b94; font-size: 16px; line-height: 1.65; }.compare.after p { color: #4e5964; }
+
+      .apply-layout { display: grid; grid-template-columns: .82fr 1.18fr; gap: 28px; height: 100%; }
+      .runlog { padding: 28px; border-right: 1px solid var(--line); }
+      .run-step { display: flex; gap: 14px; margin-bottom: 23px; color: #747c85; font-size: 18px; line-height: 1.5; }
+      .check { width: 25px; height: 25px; flex: none; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #8ab8e4; font-size: 15px; }
+      .application { padding: 32px; border: 1px solid #dfe5ea; border-radius: 26px; background: #fff; box-shadow: 0 18px 44px rgba(42,57,73,.08); }
+      .form-line { height: 46px; margin-top: 15px; padding: 13px 16px; border: 1px solid #e3e7eb; border-radius: 12px; color: #727983; font-size: 15px; }
+      .letter { margin-top: 20px; padding: 19px; border-radius: 16px; background: #f5f8fb; color: #707983; font-size: 15px; line-height: 1.62; }
+      .confirm { margin-top: 22px; padding: 15px; border-radius: 13px; color: white; background: var(--blue-deep); text-align: center; font-size: 18px; font-weight: 650; box-shadow: 0 10px 22px rgba(76,143,217,.22); }
+      .bell-button { position: relative; width: 54px; height: 54px; display: grid; place-items: center; flex: none; border: 1px solid #e1e5e9; border-radius: 17px; color: #707984; background: #f8f9fa; }
+      .bell-button svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .notify-dot { position: absolute; right: -3px; top: -3px; width: 17px; height: 17px; border: 3px solid #fff; border-radius: 50%; background: #ff3b30; box-shadow: 0 4px 10px rgba(255,59,48,.3); }
+      .bell-rings { position: absolute; inset: -14px; border: 2px solid rgba(76,143,217,.28); border-radius: 25px; box-shadow: 0 0 0 10px rgba(76,143,217,.08); }
+      .notification-popover { position: absolute; z-index: 6; top: 210px; right: 72px; width: 760px; padding: 24px; border: 1px solid rgba(204,211,220,.92); border-radius: 30px; background: rgba(249,251,253,.94); box-shadow: 0 34px 100px rgba(35,51,70,.2); backdrop-filter: blur(30px); }
+      .notification-title { display: flex; align-items: center; gap: 12px; padding: 4px 6px 20px; color: #646c76; font-size: 18px; font-weight: 650; }
+      .notification-title .notify-dot { position: static; width: 12px; height: 12px; border: 0; }
+      .friend-card { position: relative; padding: 34px; border: 1px solid rgba(204,211,220,.88); border-radius: 26px; background: rgba(255,255,255,.96); box-shadow: 0 18px 50px rgba(40,54,72,.11); }
+      .friend-head { display: flex; align-items: center; gap: 23px; }
+      .avatar { position: relative; width: 88px; height: 88px; overflow: hidden; flex: none; border-radius: 50%; background: linear-gradient(145deg,#d8e7f4,#8faac2); box-shadow: 0 9px 22px rgba(57,79,100,.2); }
+      .avatar::before { content: ""; position: absolute; left: 28px; top: 18px; width: 33px; height: 33px; border-radius: 50%; background: #f0d2be; box-shadow: 0 -10px 0 4px #475462; }
+      .avatar::after { content: ""; position: absolute; left: 17px; bottom: -7px; width: 55px; height: 42px; border-radius: 50% 50% 20% 20%; background: #425464; }
+      .friend-title { color: #31373e; font-size: 27px; font-weight: 680; }.friend-sub { margin-top: 8px; color: #8b929b; font-size: 18px; }
+      .friend-copy { margin-top: 30px; color: #626a74; font-size: 23px; line-height: 1.65; }
+      .friend-actions { display: flex; justify-content: flex-end; gap: 13px; margin-top: 31px; }
+      .friend-actions span { padding: 14px 23px; border-radius: 15px; color: #777e87; background: #f1f3f5; font-size: 19px; }
+      .friend-actions .accept { color: white; background: var(--blue-deep); }
+
+      .final-frame { background: radial-gradient(circle at 50% 38%, rgba(175,213,248,.48), transparent 25%), linear-gradient(160deg,#fbfcfd,#eaf0f5); }
+      .final-stage { position: relative; z-index: 3; width: 100%; height: 100%; display: grid; place-items: center; text-align: center; }
+      .final-doc { width: 340px; height: 430px; padding: 34px; border: 1px solid rgba(196,207,217,.8); border-radius: 35px; background: rgba(255,255,255,.9); box-shadow: 0 40px 90px rgba(43,62,81,.16); transform: rotate(-3deg); }
+      .final-doc::before { content: "职业资产.md"; display: block; color: #333940; font-size: 29px; font-weight: 700; }
+      .final-doc::after { content: "经历\A 能力\A 证据\A 岗位\A 投递记录"; white-space: pre; display: block; margin-top: 36px; color: #818994; font-size: 20px; line-height: 2.1; text-align: left; }
+      .final-copy { position: absolute; left: 0; right: 0; top: 1240px; }
+      .final-copy h1 { margin: 0; color: #24292f; font-size: 53px; line-height: 1.25; letter-spacing: -.045em; }
+      .final-copy p { margin: 24px auto 0; max-width: 760px; color: #77808a; font-size: 27px; line-height: 1.55; }
+      .brand { margin-top: 60px; color: #4f789f; font-size: 20px; font-weight: 720; letter-spacing: .12em; }
+    </style>
+  </head>
+  <body>
+    <main id="codex-keyframes" data-composition-id="codex-keyframes" data-duration="29" data-width="1080" data-height="1920" data-fps="30">
+      <audio id="bgm" data-start="0" data-duration="29" data-track-index="20" src="assets/bgm.mp3" data-volume="0.18"></audio>
+      <audio id="notification-chime" data-start="23.1" data-duration="0.72" data-track-index="21" src="assets/notification-chime.wav" data-volume="0.7"></audio>
+      <section id="scene-input" class="clip frame" data-start="0" data-duration="1.8" data-track-index="0">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">天才职业顾问 · 新任务</span><span class="top-action">Share</span></div>
+          <div class="chat" style="padding-top:340px;text-align:center">
+            <div style="color:#a4aab1;font-size:54px">⌘</div>
+            <h1 style="margin:30px 0 0;font-size:42px;letter-spacing:-.035em">今天想从哪里开始？</h1>
+            <p style="margin:18px 0 0;color:#969da6;font-size:23px">职业信息会保存在当前任务中</p>
+          </div>
+          <div class="composer" style="color:#3f454c"><span class="typed-copy">帮我润色一下简历</span><span class="cursor"></span><span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-dialogue" class="clip frame" data-start="1.8" data-duration="2.8" data-track-index="1">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">帮我润色一下简历</span><span class="top-action">Share</span></div>
+          <div class="chat">
+            <div class="user-bubble">帮我润色一下简历</div>
+            <div class="assistant"><strong>我不建议你这么干。</strong>你的简历没什么好改的。<span class="fade-word">先让你的经历，被真正记住。</span></div>
+            <div class="user-bubble typing" style="margin-top:52px">那我应该怎么做？<span class="cursor"></span></div>
+          </div>
+          <div class="composer">输入消息<span class="send-button">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-install" class="clip frame" data-start="4.6" data-duration="1.8" data-track-index="2">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">安装天才职业顾问 Skill</span><span class="top-action">Share</span></div>
+          <div class="chat">
+            <div class="user-bubble">那我应该怎么做？</div>
+            <div class="assistant">让我先安装「天才职业顾问.skill」。</div>
+            <div class="install">
+              <div class="install-title"><span class="skill-glyph">✦</span><span>天才职业顾问.skill</span><span style="margin-left:auto;color:#7d8791;font-size:18px">安装中</span></div>
+              <div class="install-meta">职业资产 · 岗位搜索 · 简历定制</div>
+              <div class="progress"><i></i></div>
+              <div class="status-row"><span class="dot"></span><span>正在接入 Codex 工作流</span></div>
+            </div>
+          </div>
+          <div class="composer">输入消息<span class="send-button">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-interview" class="clip frame" data-start="6.4" data-duration="2" data-track-index="3">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">模拟面试 · 建立职业资产</span><span class="top-action">Share</span></div>
+          <div class="chat">
+            <div class="split">
+              <div class="split-left">
+                <div class="eyebrow">Interview / 01</div>
+                <div class="question">先讲一个最能代表你的项目。</div>
+                <div class="user-bubble typing" style="margin-top:30px;max-width:94%;font-size:21px">我参与过一款 AI 面试助手，负责用户研究和产品设计。<span class="cursor"></span></div>
+                <div class="assistant" style="margin-top:34px;font-size:23px"><strong>“参与过”还不够具体。</strong><span class="fade-word">哪一部分由你直接负责？</span></div>
+              </div>
+              <div class="split-right">
+                <div class="doc-page">
+                  <div class="eyebrow">Career asset</div><h2>职业资产.md</h2><p style="color:#abb1b8">等待访谈内容……</p>
+                  <div class="ghost-lines"><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="composer">输入回答<span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-career-asset" class="clip frame" data-start="8.4" data-duration="2.2" data-track-index="4">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">模拟面试 · 职业资产正在更新</span><span class="top-action">Share</span></div>
+          <div class="chat">
+            <div class="split">
+              <div class="split-left">
+                <div class="question">“参与过”还不够具体，哪部分由你直接负责？</div>
+                <div class="answer">我独立访谈了 <span class="metric">18 名</span>求职者，整理了 <span class="metric">120 条</span>反馈，完成 PRD 与交互原型。</div>
+                <div class="question" style="margin-top:40px">结果呢？</div>
+                <div class="answer">推动 <span class="metric">3 项</span>高频功能上线，任务完成率从 <span class="metric">68% 提升到 86%</span>。</div>
+              </div>
+              <div class="split-right" style="position:relative">
+                <div class="doc-page">
+                  <div class="eyebrow">Updated just now</div><h2>职业资产.md</h2>
+                  <h3>AI 面试助手</h3><p><b>角色：</b>产品负责人</p><p><b>用户研究：</b>18 名求职者</p><p><b>证据：</b>120 条反馈</p><p><b>核心交付：</b>PRD、交互原型</p><p><b>结果：</b>完成率 68% → 86%</p>
+                </div>
+                <span class="pen" style="right:8px;top:430px"></span>
+              </div>
+            </div>
+          </div>
+          <div class="composer">继续回答<span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-strategy" class="clip frame" data-start="10.6" data-duration="2" data-track-index="5">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">基于职业资产生成岗位搜索策略</span><span class="top-action">Share</span></div>
+          <div class="chat">
+            <div class="assistant" style="margin-top:0"><strong>职业资产已建立。</strong><span class="fade-word">正在根据经历、能力与求职偏好生成搜索策略。</span></div>
+            <div class="file-card"><div class="file-head"><span class="file-icon"></span><span class="file-name">职业资产.md</span><span class="file-state">已读取</span></div></div>
+            <div class="strategy">
+              <div class="eyebrow">Search strategy</div>
+              <div class="strategy-line"><b>目标岗位</b><span>AI 产品经理</span></div>
+              <div class="strategy-line"><b>优先方向</b><span>Agent · 世界模型 · AI 应用</span></div>
+              <div class="strategy-line"><b>能力证据</b><span>用户研究 · 产品判断 · 推动落地</span></div>
+              <div class="strategy-line"><b>结果证据</b><span>18 次访谈 · 120 条反馈 · 68% → 86%</span></div>
+              <div class="chip-row"><span class="chip">世界模型</span><span class="chip">Agent 产品</span><span class="chip">杭州 / 上海</span><span class="chip">应届可投</span></div>
+            </div>
+          </div>
+          <div class="composer">继续执行<span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-job-field" class="clip frame" data-start="12.6" data-duration="2.4" data-track-index="6" style="padding:0">
+        <div class="codex" style="width:1080px;height:1920px;border-radius:0;border:0">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">正在读取 36 个招聘网页中的不同 JD</span><span class="top-action">12 / 36</span></div>
+          <div class="web-field">
+            <div class="orbit-stage" data-layout-allow-overflow>
+              <div class="web-deck">
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">具身智能团队</div><div class="job-title">AI 产品经理</div><div class="job-meta">北京 · 3–5年 · 全职</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>负责智能体产品规划与落地，推动算法、研发与设计协作。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">AI RESEARCH STUDIO</div><div class="job-title">Agent 产品负责人</div><div class="job-meta">上海 · 经验不限</div><div class="job-rule"></div><div class="job-copy"><b>任职要求</b><br>理解大模型应用，具备用户研究和产品验证能力。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">智能硬件实验室</div><div class="job-title">智能产品经理</div><div class="job-meta">深圳 · 校招</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>负责软硬件结合的产品体验和数据迭代。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">ENTERPRISE AI</div><div class="job-title">AI 应用产品经理</div><div class="job-meta">杭州 · 全职</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>推进 AI 能力在真实业务场景中的产品化。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">WORLD MODEL LAB</div><div class="job-title">世界模型公司｜AI 产品经理</div><div class="job-meta">杭州 · 应届可投 · 匹配度 92%</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>负责 AI 产品从需求洞察到上线迭代。<br><br><b>任职要求</b><br>具备用户研究、跨部门协作与项目推进能力。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">ROBOTICS NEXT</div><div class="job-title">机器人产品经理</div><div class="job-meta">苏州 · 2–4年</div><div class="job-rule"></div><div class="job-copy"><b>任职要求</b><br>能把算法能力转译为清晰的产品路径。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">AI EDUCATION</div><div class="job-title">AI 学习产品经理</div><div class="job-meta">远程 · 全职</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>搭建生成式 AI 学习体验与评估闭环。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">MODEL PLATFORM</div><div class="job-title">模型平台产品经理</div><div class="job-meta">北京 · 社招</div><div class="job-rule"></div><div class="job-copy"><b>任职要求</b><br>有开发者工具、平台产品或数据产品经验。</div></article>
+              <article class="web-card" data-layout-ignore><div class="browser-dots"><i></i><i></i><i></i></div><div class="url"></div><div class="company">AI CREATIVE LAB</div><div class="job-title">AIGC 产品经理</div><div class="job-meta">广州 · 1–3年</div><div class="job-rule"></div><div class="job-copy"><b>岗位职责</b><br>探索多模态内容生成与创作者工作流。</div></article>
+              </div>
+            </div>
+            <div class="orbit-caption">36 个招聘网页沿圆环流动 · 正在读取并匹配</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-jd-question" class="clip frame" data-start="15" data-duration="2" data-track-index="7">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">世界模型公司｜AI 产品经理</span><span class="top-action">92% 匹配</span></div>
+          <div class="chat">
+            <div class="jd-layout focus-left">
+              <div class="assistant-panel">
+                <div class="eyebrow">Codex</div>
+                <div class="assistant" style="margin-top:0;font-size:23px"><strong>这项能力缺少直接证据。</strong><span class="fade-word">你具体推动过什么？</span></div>
+                <div class="user-bubble typing" style="margin-top:36px;max-width:100%;font-size:19px">我组织产品、设计和研发进行每周评审，推动3项功能按期上线。<span class="cursor"></span></div>
+                <div class="file-card"><div class="file-head"><span class="file-icon"></span><span class="file-name">职业资产.md</span><span class="file-state">正在更新</span></div><div class="file-copy">新增：跨部门协作与项目推进证据</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="composer">输入回答<span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-jd-focus" class="clip frame" data-start="17" data-duration="1.8" data-track-index="8">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">正在读取右侧 JD</span><span class="top-action">92% 匹配</span></div>
+          <div class="chat">
+            <div class="jd-layout focus-right">
+              <div class="jd-rail">CODEX · 已完成左侧分析</div>
+              <div class="jd-panel"><div class="company">WORLD MODEL LAB</div><div class="job-title">世界模型公司｜AI 产品经理</div><div class="job-meta">杭州 · 应届可投 · 匹配度 92%</div><div class="job-rule"></div><div class="job-copy"><b>工作内容</b><br>负责 AI 产品从需求洞察到上线迭代，建立产品评估与反馈机制。与算法、研发和设计协作，把模型能力转化为真实用户价值。<br><br><b>任职要求</b><br>具备用户研究、产品判断、跨部门协作与项目推进能力；能够为关键产品决策建立证据。</div><div class="highlight-line">关键证据：组织跨部门周评审，推动 3 项高频功能按期上线</div><div class="ghost-lines" style="margin-top:34px"><i></i><i></i><i></i></div></div>
+            </div>
+          </div>
+          <div class="composer">继续执行<span class="send-button active">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-resume" class="clip frame" data-start="18.8" data-duration="2.1" data-track-index="9">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">根据 JD 定制简历</span><span class="top-action">Review</span></div>
+          <div class="chat">
+            <div class="resume-workspace">
+              <div class="before-after">
+                <div class="compare"><div class="compare-label">BEFORE</div><p>学习能力强，善于沟通协作。熟悉产品设计和用户研究。</p></div>
+                <div class="compare after"><div class="compare-label">AFTER</div><p>具备 AI 产品从用户研究、需求判断到功能落地的完整经验。独立完成18名用户访谈，并推动3项高频功能上线。</p></div>
+                <div class="file-card" style="margin-top:0"><div class="file-head"><span class="file-icon"></span><span class="file-name">世界模型公司-简历.html</span><span class="file-state">+12 -4</span></div></div>
+              </div>
+              <div class="resume-mini"><h2>林知遥</h2><small>AI 产品经理</small><div class="resume-section changed"><h3>自我评价</h3><p>具备 AI 产品从用户研究、需求判断到功能落地的完整经验。</p></div><div class="resume-section changed"><h3>核心技能</h3><p>Agent 产品设计 · 用户研究 · 跨部门推进 · 数据迭代</p></div><div class="resume-section locked"><h3>项目经历</h3><p>AI 面试助手：访谈18名用户，推动3项功能上线，任务完成率提升至86%。</p></div><div class="resume-section locked"><h3>教育经历</h3><p>示例大学 · 信息管理与信息系统</p></div></div>
+            </div>
+          </div>
+          <div class="composer">提出修改要求<span class="send-button">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-apply" class="clip frame" data-start="20.9" data-duration="2.2" data-track-index="10">
+        <div class="codex">
+          <div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">准备投递｜世界模型公司</span><span class="top-action">等待确认</span></div>
+          <div class="chat">
+            <div class="apply-layout">
+              <div class="runlog"><div class="eyebrow">Agent run</div><div class="run-step"><span class="check">✓</span><span>读取目标岗位 JD</span></div><div class="run-step"><span class="check">✓</span><span>生成针对性简历</span></div><div class="run-step"><span class="check">✓</span><span>准备推荐信文案</span></div><div class="run-step"><span class="check">✓</span><span>填写投递信息</span></div><div class="run-step"><span class="dot"></span><span>等待最终确认</span></div></div>
+              <div class="application"><div class="company">WORLD MODEL LAB</div><div class="job-title">申请 AI 产品经理</div><div class="form-line">林知遥</div><div class="form-line">lin.zhiyuan@example.com</div><div class="form-line">世界模型公司-简历.pdf</div><div class="letter">拥有从用户研究、需求判断到功能落地的完整实践，与岗位强调的 Agent 产品设计及跨部门推进能力高度匹配。</div><div class="confirm">确认投递</div></div>
+            </div>
+          </div>
+          <div class="composer">输入消息<span class="send-button">↑</span></div>
+        </div>
+      </section>
+
+      <section id="scene-notification" class="clip frame notification-scene" data-start="23.1" data-duration="1" data-track-index="11" data-sfx="soft-notification-chime">
+        <div class="codex"><div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">3 个岗位已完成投递</span><span class="bell-button"><span class="bell-rings"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg><span class="notify-dot"></span></span></div><div class="chat"><div class="assistant" style="margin-top:0"><strong>投递完成。</strong><span class="fade-word">新的招聘方消息已到达。</span></div><div class="file-card"><div class="file-head"><span class="file-icon"></span><span class="file-name">投递记录.md</span><span class="file-state">已保存</span></div></div></div><div class="composer">输入消息<span class="send-button">↑</span></div></div>
+      </section>
+
+      <section id="scene-hr" class="clip frame notification-scene" data-start="24.1" data-duration="2" data-track-index="12">
+        <div class="codex"><div class="topbar"><i class="traffic red"></i><i class="traffic yellow"></i><i class="traffic green"></i><i class="nav-icon"></i><span class="task-title">3 个岗位已完成投递</span><span class="bell-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg></span></div><div class="chat"><div class="file-card"><div class="file-head"><span class="file-icon"></span><span class="file-name">投递记录.md</span><span class="file-state">已保存</span></div></div></div><div class="composer">输入消息<span class="send-button">↑</span></div></div>
+        <div class="notification-popover"><div class="notification-title"><span class="notify-dot"></span><span>招聘方新消息</span><span style="margin-left:auto;color:#9aa1a9;font-weight:500">刚刚</span></div><div class="friend-card"><div class="friend-head"><span class="avatar"></span><div><div class="friend-title">周悦 · 世界模型公司 HR</div><div class="friend-sub">请求添加为联系人</div></div></div><div class="friend-copy">Hi，我们是一家世界模型公司。看过你的项目经历后，我们对你很感兴趣，方便聊聊吗？</div><div class="friend-actions"><span>稍后处理</span><span class="accept">接受</span></div></div></div>
+      </section>
+
+      <section id="scene-final" class="clip frame final-frame" data-start="26.1" data-duration="2.9" data-track-index="13">
+        <div class="final-stage"><div class="final-doc"></div><div class="final-copy"><h1>从一次性的简历修改，<br>到一套持续生长的求职系统。</h1><p>职业资产持续记录、读取并更新，让每一次求职都建立在上一次之上。</p><div class="brand">天才职业顾问 SKILL</div></div></div>
+      </section>
+      <script>
+        const splitCharacters = (element) => {
+          const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+          const nodes = [];
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+          nodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            [...node.nodeValue].forEach((character) => {
+              const span = document.createElement("span");
+              span.className = "char";
+              span.textContent = character === " " ? "\u00a0" : character;
+              fragment.appendChild(span);
+            });
+            node.replaceWith(fragment);
+          });
+        };
+
+        document.querySelectorAll(".assistant").forEach(splitCharacters);
+
+        const tl = gsap.timeline({ paused: true });
+        const fadeWindow = (selector, at, duration = 0.42) =>
+          tl.fromTo(selector, { opacity: 0 }, { opacity: 1, duration, ease: "power2.out", immediateRender: false }, at);
+        const surface = (scene) => scene === "#scene-final" ? scene + " .final-stage" : scene + " .codex";
+        const handoff = (outgoing, incoming, at, duration = 0.58) => {
+          const pose = { scale: 0.988, y: -4, filter: "blur(4px)" };
+          tl.to(surface(outgoing), { ...pose, duration: 0.18, ease: "power2.in" }, at - 0.18);
+          tl.fromTo(surface(incoming), pose,
+            { scale: 1, y: 0, filter: "blur(0px)", duration, ease: "expo.out", immediateRender: false }, at);
+        };
+        const rise = (selector, at, fromY = 34, duration = 0.48) =>
+          tl.fromTo(selector, { y: fromY, opacity: 0 }, { y: 0, opacity: 1, duration, ease: "expo.out", immediateRender: false }, at);
+        const stream = (scene, at, duration = 0.8) =>
+          tl.to(scene + " .assistant .char", { opacity: 1, duration: 0.08, stagger: duration / Math.max(1, document.querySelectorAll(scene + " .assistant .char").length), ease: "power1.out" }, at);
+        const type = (selector, at, duration = 0.75, steps = 14) =>
+          tl.to(selector, { clipPath: "inset(0 0% 0 0)", duration, ease: `steps(${steps})` }, at);
+
+        fadeWindow("#scene-input .codex", 0.05, 0.35);
+        rise("#scene-input h1", 0.18, 34, 0.5);
+        rise("#scene-input p", 0.32, 24, 0.5);
+        type("#scene-input .typed-copy", 0.52, 0.82, 12);
+        tl.to("#scene-input .cursor", { opacity: 0.15, duration: 0.16, repeat: 3, yoyo: true }, 0.62);
+        tl.to("#scene-input .send-button", { scale: 0.9, duration: 0.1, repeat: 1, yoyo: true }, 1.45);
+
+        handoff("#scene-input", "#scene-dialogue", 1.8);
+        rise("#scene-dialogue .user-bubble:first-child", 1.98, 24, 0.35);
+        stream("#scene-dialogue", 2.22, 0.92);
+        type("#scene-dialogue .typing", 3.42, 0.72, 9);
+        tl.to("#scene-dialogue .cursor", { opacity: 0.12, duration: 0.14, repeat: 3, yoyo: true }, 3.65);
+
+        handoff("#scene-dialogue", "#scene-install", 4.6);
+        stream("#scene-install", 4.78, 0.6);
+        rise("#scene-install .install", 5.16, 44, 0.42);
+        tl.fromTo("#scene-install .progress > i", { scaleX: 0, transformOrigin: "left" }, { scaleX: 1, duration: 0.72, ease: "power2.inOut", immediateRender: false }, 5.45);
+
+        handoff("#scene-install", "#scene-interview", 6.4);
+        rise("#scene-interview .doc-page", 6.6, 45, 0.52);
+        type("#scene-interview .typing", 6.72, 0.82, 20);
+        stream("#scene-interview", 7.48, 0.58);
+
+        handoff("#scene-interview", "#scene-career-asset", 8.4);
+        tl.fromTo("#scene-career-asset .answer", { opacity: 0 }, { opacity: 1, duration: 0.34, stagger: 0.48, ease: "power2.out", immediateRender: false }, 8.62);
+        rise("#scene-career-asset .doc-page", 8.72, 46, 0.55);
+        tl.fromTo("#scene-career-asset .doc-page p", { opacity: 0 }, { opacity: 1, duration: 0.22, stagger: 0.15, ease: "power1.out", immediateRender: false }, 9.15);
+        tl.fromTo("#scene-career-asset .pen", { x: 52, y: -30, rotation: -36, opacity: 0 }, { x: -6, y: 180, rotation: -36, opacity: 1, duration: 1.05, ease: "steps(6)", immediateRender: false }, 9.18);
+
+        handoff("#scene-career-asset", "#scene-strategy", 10.6);
+        stream("#scene-strategy", 10.72, 0.52);
+        rise("#scene-strategy .file-card", 10.95, 28, 0.38);
+        rise("#scene-strategy .strategy", 11.16, 42, 0.45);
+        tl.fromTo("#scene-strategy .strategy-line, #scene-strategy .chip", { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.09, ease: "power1.out", immediateRender: false }, 11.48);
+
+        handoff("#scene-strategy", "#scene-job-field", 12.6, 0.64);
+        tl.fromTo("#scene-job-field .web-card", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: { each: 0.07, from: "center" }, ease: "power2.out", immediateRender: false }, 12.8);
+        tl.fromTo("#scene-job-field .web-deck", { rotationY: -62, scale: 0.9 }, { rotationY: 0, scale: 1, duration: 1.78, ease: "circ.inOut", immediateRender: false }, 12.82);
+        fadeWindow("#scene-job-field .orbit-caption", 13.35, 0.42);
+        tl.to("#scene-job-field .web-card:nth-child(5)", { boxShadow: "0 46px 110px rgba(54,102,147,.38)", duration: 0.34, repeat: 1, yoyo: true }, 14.34);
+
+        handoff("#scene-job-field", "#scene-jd-question", 15, 0.64);
+        rise("#scene-jd-question .assistant-panel", 15.18, 38, 0.44);
+        stream("#scene-jd-question", 15.34, 0.52);
+        type("#scene-jd-question .typing", 15.9, 0.72, 22);
+        rise("#scene-jd-question .file-card", 16.26, 22, 0.42);
+
+        handoff("#scene-jd-question", "#scene-jd-focus", 17);
+        tl.fromTo("#scene-jd-focus .jd-rail", { x: 150, opacity: 0 }, { x: 0, opacity: 1, duration: 0.38, ease: "expo.out", immediateRender: false }, 17.12);
+        tl.fromTo("#scene-jd-focus .jd-panel", { x: 220, opacity: 0 }, { x: 0, opacity: 1, duration: 0.58, ease: "expo.out", immediateRender: false }, 17.18);
+        fadeWindow("#scene-jd-focus .highlight-line", 17.85, 0.42);
+
+        handoff("#scene-jd-focus", "#scene-resume", 18.8);
+        rise("#scene-resume .compare:first-child", 18.98, 34, 0.38);
+        rise("#scene-resume .compare.after", 19.25, 34, 0.42);
+        rise("#scene-resume .resume-mini", 19.06, 45, 0.5);
+        tl.fromTo("#scene-resume .changed", { opacity: 0.25 }, { opacity: 1, duration: 0.35, stagger: 0.22, ease: "power2.out", immediateRender: false }, 19.72);
+        rise("#scene-resume .file-card", 20.02, 24, 0.34);
+
+        handoff("#scene-resume", "#scene-apply", 20.9);
+        tl.fromTo("#scene-apply .run-step", { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.24, stagger: 0.14, ease: "power2.out", immediateRender: false }, 21.08);
+        rise("#scene-apply .application", 21.12, 48, 0.5);
+        tl.to("#scene-apply .confirm", { scale: 0.96, duration: 0.12, repeat: 1, yoyo: true }, 22.62);
+
+        handoff("#scene-apply", "#scene-notification", 23.1, 0.5);
+        stream("#scene-notification", 23.18, 0.42);
+        tl.fromTo("#scene-notification .bell-rings", { scale: 0.45, opacity: 0 }, { scale: 1.12, opacity: 1, duration: 0.42, ease: "expo.out", immediateRender: false }, 23.2);
+        tl.to("#scene-notification .bell-button", { rotation: 8, duration: 0.08, repeat: 3, yoyo: true }, 23.28);
+
+        handoff("#scene-notification", "#scene-hr", 24.1, 0.5);
+        tl.fromTo("#scene-hr .notification-popover", { x: 90, y: -75, scale: 0.82, opacity: 0, transformOrigin: "right top" }, { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.62, ease: "back.out(1.28)", immediateRender: false }, 24.18);
+        tl.fromTo("#scene-hr .friend-head, #scene-hr .friend-copy, #scene-hr .friend-actions", { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.17, ease: "power2.out", immediateRender: false }, 24.68);
+
+        handoff("#scene-hr", "#scene-final", 26.1, 0.7);
+        fadeWindow("#scene-final .final-doc", 26.25, 0.55);
+        rise("#scene-final .final-copy", 26.55, 58, 0.72);
+        rise("#scene-final .brand", 27.5, 20, 0.65);
+
+        window.__timelines["codex-keyframes"] = tl;
+      </script>
+    </main>
+  </body>
+</html>

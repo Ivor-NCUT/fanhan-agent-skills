@@ -1,0 +1,24 @@
+{
+  "duration": 29,
+  "maxStaticSec": 2.8,
+  "assertions": [
+    {
+      "kind": "appearsBy",
+      "selector": "#scene-input .typed-copy",
+      "bySec": 1.4
+    },
+    {
+      "kind": "before",
+      "a": "#scene-notification .bell-button",
+      "b": "#scene-hr .notification-popover"
+    },
+    {
+      "kind": "staysInFrame",
+      "selector": "#scene-job-field .web-deck"
+    },
+    {
+      "kind": "keepsMoving",
+      "withinSelector": "#codex-keyframes"
+    }
+  ]
+}
