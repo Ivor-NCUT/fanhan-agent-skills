@@ -1,0 +1,4 @@
+interface:
+  display_name: "小红书私信引流"
+  short_description: "检查招聘私信与评论，回复意向咨询，并行交接运营飞书任务并核验去重"
+  default_prompt: "使用 $xiaohongshu-dm-lead-routing 检查当前小红书账号的招聘私信和评论，按已授权话术回复并交接飞书任务。"
