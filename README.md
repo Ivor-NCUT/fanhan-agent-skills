@@ -164,3 +164,7 @@
 本仓库排除了 `.git`、`.venv`、缓存、临时输出、编译文件和运行产物，只保留说明、脚本、模板和参考资料。
 
 部分通用 skill 来自外部作者或工具生态，版权与许可请以各目录中的原始说明为准。没有明确许可证的目录，请先联系原作者再做商业分发。
+
+## 候选人推荐小红书帖子
+
+[Skill](self-created/candidate-recommendation-xhs/SKILL.md) · [泛函内容风格中的主维护版本](https://github.com/Ivor-NCUT/fanhan-content-style/tree/main/skills/candidate-recommendation-xhs)。封面 SVG/PNG、脱敏标题正文、固定招聘介绍图。

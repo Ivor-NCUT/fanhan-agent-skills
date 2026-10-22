@@ -1769,5 +1769,15 @@
     "display_title": "AI 人才搜索@泛函",
     "one_liner": "用作品与播客证据搜索人才，批量研究并生成可核验的建联草稿。",
     "repo_path": "self-created/ai-talent-search-fanhan"
+  },
+  {
+    "folder": "candidate-recommendation-xhs",
+    "name": "candidate-recommendation-xhs",
+    "title": "候选人推荐小红书帖子",
+    "display_title": "候选人推荐小红书帖子",
+    "description": "脱敏候选人标题、正文、大字封面 SVG/PNG，原样复用固定招聘介绍图。",
+    "one_liner": "为候选人制作小红书推荐帖子，保密并复用已确认物料。",
+    "category": "self-created",
+    "repo_path": "self-created/candidate-recommendation-xhs"
   }
 ]
